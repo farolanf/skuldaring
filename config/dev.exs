@@ -3,9 +3,9 @@ use Mix.Config
 # Configure your database
 config :skuldaring, Skuldaring.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "admin",
   database: "skuldaring_dev",
-  hostname: "localhost",
+  hostname: "docker",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
