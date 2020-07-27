@@ -17,7 +17,8 @@ defmodule SkuldaringWeb.Router do
   scope "/", SkuldaringWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", FrontLive, :index
+    live "/test", PageLive, :index
   end
 
   # Other scopes may use custom stacks.
