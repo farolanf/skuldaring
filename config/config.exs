@@ -12,7 +12,8 @@ config :skuldaring,
 
 config :skuldaring, :pow,
   user: Skuldaring.Users.User,
-  repo: Skuldaring.Repo
+  repo: Skuldaring.Repo,
+  web_module: SkuldaringWeb
 
 # Configures the endpoint
 config :skuldaring, SkuldaringWeb.Endpoint,
