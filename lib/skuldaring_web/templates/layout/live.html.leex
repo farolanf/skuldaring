@@ -1,12 +1,22 @@
-<%= live_render @socket, SkuldaringWeb.TopbarLive, id: "topbar" %>
+<%= live_render @socket, SkuldaringWeb.NavLive.TopbarLive, id: "topbar" %>
 <main role="main" class="container">
-  <div role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></div>
+  <%= if live_flash(@flash, :info) do %>
+    <div class="callout primary" role="alert"
+      phx-click="lv:clear-flash"
+      phx-value-key="info"><%= live_flash(@flash, :info) %></div>
+  <% end %>
 
-  <div role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></div>
+  <%= if live_flash(@flash, :error) do %>
+    <div class="callout alert" role="alert">
+      <%= live_flash(@flash, :error) %>
+      <button type="button" class="close-button" aria-label="Dismiss alert"
+        phx-click="lv:clear-flash"
+        phx-value-key="error"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
 
   <%= @inner_content %>
 </main>
