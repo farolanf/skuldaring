@@ -1,6 +1,8 @@
 defmodule SkuldaringWeb.Router do
   use SkuldaringWeb, :router
 
+  alias Skuldaring.Accounts
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -18,7 +20,28 @@ defmodule SkuldaringWeb.Router do
     pipe_through :browser
 
     live "/", FrontLive, :index
-    live "/test", PageLive, :index
+  end
+
+  scope "/admin", SkuldaringWeb do
+    pipe_through [:browser, :authenticate_user]
+
+    live "/users", UserLive.Index, :index
+    live "/users/new", UserLive.Index, :new
+    live "/users/:id/edit", UserLive.Index, :edit
+    live "/users/:id", UserLive.Show, :show
+    live "/users/:id/show/edit", UserLive.Show, :edit
+  end
+
+  defp authenticate_user(conn, _) do
+    case get_session(conn, :user_id) do
+      nil ->
+        conn
+        |> Phoenix.Controller.put_flash(:error, "Login required")
+        |> Phoenix.Controller.redirect(to: "/")
+        |> halt()
+      user_id ->
+        assign(conn, :current_user, Accounts.get_user!(user_id))
+    end
   end
 
   # Other scopes may use custom stacks.
