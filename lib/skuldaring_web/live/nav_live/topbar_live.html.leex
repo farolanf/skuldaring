@@ -20,9 +20,6 @@
     <ul class="menu">
       <li><input type="search" placeholder="Search"></li>
       <li><button type="button" class="button">Search</button></li>
-      <li>
-        <%= live_patch "Admin", to: Routes.user_index_path(@socket, :index) %>
-      </li>
       <%= if !assigns[:current_user] do %>
         <li>
           <%= live_patch "Register", to: Routes.page_front_path(@socket, :register) %>
