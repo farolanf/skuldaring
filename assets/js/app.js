@@ -2,6 +2,8 @@
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 import "../css/app.scss"
+
+import 'jquery'
 import "foundation-sites/dist/js/foundation.min"
 
 // webpack automatically bundles all modules in your
@@ -32,3 +34,7 @@ liveSocket.connect()
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)
 window.liveSocket = liveSocket
+
+window.addEventListener("phx:page-loading-stop", info => {
+  $(document).foundation()
+})

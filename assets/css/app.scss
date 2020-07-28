@@ -1,3 +1,7 @@
 /* This file is for your main application css. */
 @import "../node_modules/nprogress/nprogress.css";
 @import "../node_modules/foundation-sites/dist/css/foundation.min.css";
+
+.no-js * {
+  display: none;
+}
