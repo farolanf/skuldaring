@@ -19,7 +19,7 @@ defmodule SkuldaringWeb.Router do
   scope "/", SkuldaringWeb do
     pipe_through :browser
 
-    live "/", FrontLive, :index
+    live "/", PageLive.FrontLive, :index
   end
 
   scope "/admin", SkuldaringWeb do

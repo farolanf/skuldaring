@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.TopbarLive do
+defmodule SkuldaringWeb.PageLive.FrontLive do
   use SkuldaringWeb, :live_view
 
   @impl true

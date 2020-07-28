@@ -1,7 +1,9 @@
 <div class="top-bar" phx-hook="foundation">
   <div class="top-bar-left">
     <ul class="dropdown menu" data-dropdown-menu>
-      <li class="menu-text">Site Title</li>
+      <li>
+        <a href="/" class="menu-text">Site Title</a>
+      </li>
       <li>
         <a href="#">One</a>
         <ul class="menu vertical">
@@ -18,8 +20,11 @@
     <ul class="menu">
       <li><input type="search" placeholder="Search"></li>
       <li><button type="button" class="button">Search</button></li>
+      <li>
+        <%= live_patch "Admin", to: Routes.user_index_path(@socket, :index) %>
+      </li>
       <%= if !assigns[:current_user] do %>
-        <li><a href="#" phx-click="">Login</a></li>
+        <li><a phx-click="">Login</a></li>
       <% end %>
     </ul>
   </div>
