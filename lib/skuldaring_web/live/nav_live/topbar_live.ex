@@ -1,5 +1,5 @@
 defmodule SkuldaringWeb.NavLive.TopbarLive do
-  use SkuldaringWeb, :live_view
+  use SkuldaringWeb, :live_component
 
   @impl true
   def mount(_params, _session, socket) do

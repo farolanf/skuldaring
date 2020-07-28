@@ -1,4 +1,4 @@
-<%= live_render @socket, SkuldaringWeb.NavLive.TopbarLive, id: "topbar" %>
+<%= live_component @socket, SkuldaringWeb.NavLive.TopbarLive, id: "topbar" %>
 <main role="main" class="container">
   <%= if live_flash(@flash, :info) do %>
     <div class="callout primary" role="alert"
