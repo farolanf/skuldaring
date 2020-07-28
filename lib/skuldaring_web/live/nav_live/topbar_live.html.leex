@@ -2,7 +2,7 @@
   <div class="top-bar-left">
     <ul class="dropdown menu" data-dropdown-menu>
       <li>
-        <a href="/" class="menu-text">Site Title</a>
+        <%= live_patch "Skul Daring", to: "/", class: "menu-text" %>
       </li>
       <li>
         <a href="#">One</a>
@@ -24,7 +24,12 @@
         <%= live_patch "Admin", to: Routes.user_index_path(@socket, :index) %>
       </li>
       <%= if !assigns[:current_user] do %>
-        <li><a phx-click="">Login</a></li>
+        <li>
+          <%= live_patch "Register", to: Routes.page_front_path(@socket, :register) %>
+        </li>
+        <li>
+          <%= live_patch "Login", to: Routes.page_front_path(@socket, :login) %>
+        </li>
       <% end %>
     </ul>
   </div>
