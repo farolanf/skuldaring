@@ -1,9 +1,11 @@
 <%= if @live_action in [:login] do %>
   <%= live_modal @socket, :login_modal, SkuldaringWeb.Forms.LoginForm,
+    id: :login_form,
     return_to: Routes.page_front_path(@socket, :index) %>
 <% end %>
 
 <%= if @live_action in [:register] do %>
   <%= live_modal @socket, :register_modal, SkuldaringWeb.Forms.RegisterForm,
+    id: :register_form,
     return_to: Routes.page_front_path(@socket, :index) %>
 <% end %>
