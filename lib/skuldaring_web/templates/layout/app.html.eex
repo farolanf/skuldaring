@@ -1,0 +1,21 @@
+<main role="main" class="container">
+  <%= if get_flash(@conn, :info) do %>
+    <div class="callout primary" role="alert"
+      phx-click="lv:clear-flash"
+      phx-value-key="info"><%= get_flash(@conn, :info) %></div>
+  <% end %>
+
+  <%= if get_flash(@conn, :error) do %>
+    <div class="callout alert" role="alert">
+      <%= get_flash(@conn, :error) %>
+      <button type="button" class="close-button" aria-label="Dismiss alert"
+        phx-click="lv:clear-flash"
+        phx-value-key="error"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+
+  <%= @inner_content %>
+</main>
