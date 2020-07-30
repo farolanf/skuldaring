@@ -1,6 +1,9 @@
 defmodule SkuldaringWeb.Router do
   use SkuldaringWeb, :router
 
+  alias Skuldaring.Repo
+  alias Skuldaring.Accounts.User
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +11,7 @@ defmodule SkuldaringWeb.Router do
     plug :put_root_layout, {SkuldaringWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :load_user
   end
 
   pipeline :api do
@@ -26,6 +30,21 @@ defmodule SkuldaringWeb.Router do
 
   scope "/admin", SkuldaringWeb do
     # pipe_through [:browser, :authenticate_user]
+  end
+
+  def load_user(conn, _opts) do
+    case get_session(conn, :user_id) do
+      nil -> conn
+      user_id ->
+        case Repo.get(User, user_id) do
+          nil ->
+            conn
+            |> delete_session(:user_id)
+            |> delete_session(:user)
+          user ->
+            put_session(conn, :user, user)
+        end
+    end
   end
 
   # Other scopes may use custom stacks.

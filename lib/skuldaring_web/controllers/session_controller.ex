@@ -1,7 +1,7 @@
 defmodule SkuldaringWeb.SessionController do
   use SkuldaringWeb, :controller
 
-  import Phoenix.LiveView.Controller
+  require Logger
 
   alias Skuldaring.Repo
   alias Skuldaring.Accounts.User
@@ -9,14 +9,13 @@ defmodule SkuldaringWeb.SessionController do
   def new(conn, params) do
     with {:ok, tokens} <- OpenIDConnect.fetch_tokens(:skuldaring, params),
         {:ok, claims} <- OpenIDConnect.verify(:skuldaring, tokens["id_token"]) do
-      IO.inspect claims, label: "claims"
+      Logger.debug "claims = #{inspect claims}"
 
       case Repo.get_by(User, email: claims["email"]) do
         %User{} = user ->
-          IO.puts "user found"
-          live_render conn, SkuldaringWeb.PageLive.FrontLive, session: %{
-            "user" => user
-          }
+          conn
+          |> put_session(:user_id, user.id)
+          |> redirect(to: "/")
         nil ->
           user_params = %{
             email: claims["email"],
@@ -29,11 +28,11 @@ defmodule SkuldaringWeb.SessionController do
           |> User.changeset(user_params)
           |> Repo.insert()
 
-          IO.puts "user created"
+          Logger.debug "created user #{inspect user}"
 
-          live_render conn, SkuldaringWeb.PageLive.FrontLive, session: %{
-            "user" => user
-          }
+          conn
+          |> put_session(:user_id, user.id)
+          |> redirect(to: "/")
         _ ->
           conn
           |> put_flash(:error, "Login failed")
