@@ -10,7 +10,9 @@ defmodule SkuldaringWeb.PageLive.FrontLive do
     Logger.debug "live session = #{inspect session}"
     socket = case session["user_id"] do
       nil -> socket
-      user_id -> assign_new(socket, :user, fn -> Repo.get(User, user_id) end)
+      user_id ->
+        socket
+        |> assign_new(:user, fn -> Repo.get(User, user_id) end)
     end
     {:ok, socket}
   end

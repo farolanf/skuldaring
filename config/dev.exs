@@ -1,5 +1,8 @@
 use Mix.Config
 
+config :skuldaring,
+  logout_url: "http://docker:8080/auth/realms/skuldaring/protocol/openid-connect/logout?redirect_uri=http://localhost:4000/logout"
+
 # Configure your database
 config :skuldaring, Skuldaring.Repo,
   username: "postgres",

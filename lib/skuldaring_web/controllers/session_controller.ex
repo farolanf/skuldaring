@@ -38,8 +38,13 @@ defmodule SkuldaringWeb.SessionController do
           |> put_flash(:error, "Login failed")
           |> redirect(to: "/")
       end
-
     end
+  end
+
+  def logout(conn, _params) do
+    conn
+    |> delete_session(:user_id)
+    |> redirect(to: "/")
   end
 
 end

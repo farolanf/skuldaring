@@ -3,6 +3,10 @@ defmodule SkuldaringWeb.NavLive.TopbarLive do
 
   @impl true
   def mount(socket) do
-    {:ok, assign(socket, auth_url: OpenIDConnect.authorization_uri(:skuldaring))}
+    socket = socket
+    |> assign(auth_url: OpenIDConnect.authorization_uri(:skuldaring))
+    |> assign(logout_url: Application.get_env(:skuldaring, :logout_url))
+
+    {:ok, socket}
   end
 end

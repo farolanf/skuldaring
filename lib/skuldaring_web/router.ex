@@ -18,6 +18,7 @@ defmodule SkuldaringWeb.Router do
     pipe_through :browser
 
     get "/session/new", SessionController, :new
+    get "/logout", SessionController, :logout
 
     live "/", PageLive.FrontLive, :index
     live "/login", PageLive.FrontLive, :login

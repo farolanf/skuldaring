@@ -20,13 +20,23 @@
     <ul class="menu">
       <li><input type="search" placeholder="Search"></li>
       <li><button type="button" class="button">Search</button></li>
-      <%= if !assigns[:current_user] do %>
+      <%= if !assigns[:user] do %>
         <li>
           <%= live_patch "Register", to: Routes.page_front_path(@socket, :register) %>
         </li>
         <li>
           <%= link "Login", to: @auth_url %>
         </li>
+      <% end %>
+      <%= if assigns[:user] do %>
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li>
+            <a href="#">Akun</a>
+            <ul class="menu vertical">
+              <li><%= link "Keluar", to: @logout_url %></li>
+            </ul>
+          </li>
+        </ul>
       <% end %>
     </ul>
   </div>
