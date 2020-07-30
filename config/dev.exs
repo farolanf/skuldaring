@@ -72,7 +72,7 @@ config :skuldaring, :openid_connect_providers,
   skuldaring: [
     discovery_document_uri: "http://docker:8080/auth/realms/skuldaring/.well-known/openid-configuration",
     client_id: "skuldaring",
-    client_secret: "ae5f6142-864a-4b63-a5e0-bda97379ad6a",
+    client_secret: "93aa2d50-598b-48ac-aa7d-497f2804b217",
     redirect_uri: "http://localhost:4000/session/new",
     response_type: "code",
     scope: "openid email profile"
