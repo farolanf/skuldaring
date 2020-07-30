@@ -13,7 +13,7 @@ defmodule SkuldaringWeb.ModalComponent do
     >
       <div id="<%= @id %>" class="reveal" data-reveal style="display: block">
         <%= live_patch raw("&times;"), to: @return_to, class: "close-button" %>
-        <%= live_component @socket, @component, @opts %>
+        <%= render(Pow.Phoenix.SessionView, "session/new.html.eex", @opts) %>
       </div>
     </div>
     """

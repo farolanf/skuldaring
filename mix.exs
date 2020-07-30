@@ -47,7 +47,7 @@ defmodule Skuldaring.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:pow, "~> 1.0.20"}
+      {:openid_connect, "~> 0.2.2"}
     ]
   end
 

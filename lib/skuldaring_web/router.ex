@@ -1,6 +1,5 @@
 defmodule SkuldaringWeb.Router do
   use SkuldaringWeb, :router
-  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,14 +14,10 @@ defmodule SkuldaringWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/" do
-    pipe_through :browser
-
-    pow_routes()
-  end
-
   scope "/", SkuldaringWeb do
     pipe_through :browser
+
+    get "/session/new", SessionController, :new
 
     live "/", PageLive.FrontLive, :index
     live "/login", PageLive.FrontLive, :login
@@ -30,7 +25,7 @@ defmodule SkuldaringWeb.Router do
   end
 
   scope "/admin", SkuldaringWeb do
-    pipe_through [:browser, :authenticate_user]
+    # pipe_through [:browser, :authenticate_user]
   end
 
   # Other scopes may use custom stacks.

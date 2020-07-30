@@ -10,11 +10,6 @@ use Mix.Config
 config :skuldaring,
   ecto_repos: [Skuldaring.Repo]
 
-config :skuldaring, :pow,
-  user: Skuldaring.Users.User,
-  repo: Skuldaring.Repo,
-  web_module: SkuldaringWeb
-
 # Configures the endpoint
 config :skuldaring, SkuldaringWeb.Endpoint,
   url: [host: "localhost"],

@@ -14,9 +14,10 @@ defmodule Skuldaring.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Skuldaring.PubSub},
       # Start the Endpoint (http/https)
-      SkuldaringWeb.Endpoint
+      SkuldaringWeb.Endpoint,
       # Start a worker by calling: Skuldaring.Worker.start_link(arg)
       # {Skuldaring.Worker, arg}
+      {OpenIDConnect.Worker, Application.get_env(:skuldaring, :openid_connect_providers)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

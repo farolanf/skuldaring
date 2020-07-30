@@ -65,6 +65,16 @@ config :skuldaring, SkuldaringWeb.Endpoint,
     ]
   ]
 
+config :skuldaring, :openid_connect_providers,
+  skuldaring: [
+    discovery_document_uri: "http://docker:8080/auth/realms/skuldaring/.well-known/openid-configuration",
+    client_id: "skuldaring",
+    client_secret: "ae5f6142-864a-4b63-a5e0-bda97379ad6a",
+    redirect_uri: "http://localhost:4000/session/new",
+    response_type: "code",
+    scope: "openid email profile"
+  ]
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

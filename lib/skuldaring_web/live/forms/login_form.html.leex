@@ -1,4 +1,4 @@
-<form id="login-form" phx-target="<%= @myself %>" phx-change="validate">
+<%= form_for :user, "#", [phx_target: @myself, phx_submit: :login] %>
   <%= if live_flash(@flash, :form_error) do %>
     <div class="callout alert" role="alert">
       <%= live_flash(@flash, :form_error) %>
@@ -12,11 +12,11 @@
   <% end %>
   <label>
     Email
-    <input type="text" name="email" placeholder="Email">
+    <input type="text" name="user[email]" placeholder="Email">
   </label>
   <label>
     Password
-    <input type="password" name="password" placeholder="Password">
+    <input type="password" name="user[password]" placeholder="Password">
   </label>
   <button class="button">Login</button>
   <%= live_patch "Register", to: Routes.page_front_path(@socket, :register), class: "button secondary" %>

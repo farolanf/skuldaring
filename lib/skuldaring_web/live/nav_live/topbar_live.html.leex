@@ -25,7 +25,7 @@
           <%= live_patch "Register", to: Routes.page_front_path(@socket, :register) %>
         </li>
         <li>
-          <%= live_patch "Login", to: Routes.page_front_path(@socket, :login) %>
+          <%= link "Login", to: @auth_url %>
         </li>
       <% end %>
     </ul>
