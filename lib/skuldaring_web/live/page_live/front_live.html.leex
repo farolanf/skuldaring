@@ -10,7 +10,7 @@
     return_to: Routes.page_front_path(@socket, :index) %>
 <% end %>
 
-<%= if @user do %>
+<%= if assigns[:user] do %>
   <h1>Hello <%= @user.username %>!</h1>
 <% else %>
   <h1>Hello Guest!</h1>
