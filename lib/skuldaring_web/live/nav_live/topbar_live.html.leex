@@ -4,9 +4,9 @@
       <li>
         <%= live_patch "Skul Daring", to: "/", class: "menu-text" %>
       </li>
-      <li>
+      <li class="is-dropdown-submenu-parent">
         <a href="#">One</a>
-        <ul class="menu vertical">
+        <ul class="menu vertical is-dropdown-submenu">
           <li><a href="#">One</a></li>
           <li><a href="#">Two</a></li>
           <li><a href="#">Three</a></li>
@@ -30,9 +30,9 @@
       <% end %>
       <%= if assigns[:user] do %>
         <ul class="dropdown menu" data-dropdown-menu>
-          <li>
+          <li class="is-dropdown-submenu-parent">
             <a href="#">Akun</a>
-            <ul class="menu vertical">
+            <ul class="menu vertical is-dropdown-submenu">
               <li><%= link "Keluar", to: @logout_url %></li>
             </ul>
           </li>
