@@ -6,6 +6,7 @@ defmodule SkuldaringWeb.NavLive.TopbarLive do
     socket = socket
     |> assign(auth_url: OpenIDConnect.authorization_uri(:skuldaring))
     |> assign(logout_url: Application.get_env(:skuldaring, :logout_url))
+    |> assign(registration_url: Application.get_env(:skuldaring, :registration_url))
 
     {:ok, socket}
   end

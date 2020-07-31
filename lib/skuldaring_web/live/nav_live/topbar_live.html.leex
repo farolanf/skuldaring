@@ -22,7 +22,7 @@
       <li><button type="button" class="button">Search</button></li>
       <%= if !assigns[:user] do %>
         <li>
-          <%= live_patch "Register", to: Routes.page_front_path(@socket, :register) %>
+          <%= link "Register", to: @registration_url %>
         </li>
         <li>
           <%= link "Login", to: @auth_url %>
