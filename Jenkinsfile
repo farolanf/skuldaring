@@ -3,7 +3,6 @@ pipeline {
   
   environment {
     HOME = '/tmp/home'
-    MIX_ENV = 'prod'
     FRONTEND_URL = credentials('skuldaring_frontend_url')
     DATABASE_URL = credentials('skuldaring_database_url')
     TEST_DATABASE_URL = credentials('skuldaring_test_database_url')
@@ -46,9 +45,9 @@ pipeline {
         }
       }
       steps {
-        sh 'mix compile'
+        sh 'MIX_ENV=prod mix compile'
         sh 'mix phx.digest'
-        sh 'mix ecto.migrate'
+        sh 'MIX_ENV=prod mix ecto.migrate'
         sh 'mix test'
       }
     }
