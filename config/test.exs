@@ -1,15 +1,19 @@
 use Mix.Config
 
+database_url =
+  System.get_env("DATABASE_URL") ||
+    raise """
+    environment variable DATABASE_URL is missing.
+    For example: ecto://USER:PASS@HOST/DATABASE
+    """
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :skuldaring, Skuldaring.Repo,
-  username: "postgres",
-  password: "admin",
-  database: "skuldaring_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "docker",
+  url: database_url,
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
