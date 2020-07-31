@@ -9,6 +9,7 @@ pipeline {
     KEYCLOAK_URL = credentials('skuldaring_keycloak_url')
     KEYCLOAK_CLIENT_ID = credentials('skuldaring_keycloak_client_id')
     KEYCLOAK_CLIENT_SECRET = credentials('skuldaring_keycloak_client_secret')
+    SECRET_KEY_BASE = credentials('skuldaring_secret_key_base')
   }
 
   stages {
