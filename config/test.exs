@@ -7,9 +7,9 @@ use Mix.Config
 # Run `mix help test` for more information.
 config :skuldaring, Skuldaring.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "admin",
   database: "skuldaring_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
+  hostname: "docker",
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
