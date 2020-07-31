@@ -23,7 +23,7 @@ pipeline {
       steps {
         sh 'mix local.hex --force'
         sh 'mix local.rebar'
-        sh 'mix deps.get'
+        sh 'mix deps.get --only prod'
       }
     }
     stage('build assets') {
@@ -37,7 +37,7 @@ pipeline {
         sh 'cd assets && npm ci && npm run deploy'
       }
     }
-    stage('test') {
+    stage('build and test') {
       agent { 
         docker {
           image 'elixir:1.10'
@@ -45,6 +45,7 @@ pipeline {
         }
       }
       steps {
+        sh 'mix phx.digest'
         sh 'mix ecto.migrate'
         sh 'mix test'
       }
