@@ -1,16 +1,51 @@
 pipeline {
-  agent any
+  agent none
+  
+  environment {
+    HOME = '/tmp'
+    FRONTEND_URL = credentials('skuldaring_frontend_url')
+    DATABASE_URL = credentials('skuldaring_database_url')
+    KEYCLOAK_URL = credentials('skuldaring_keycloak_url')
+    KEYCLOAK_CLIENT_ID = credentials('skuldaring_keycloak_client_id')
+    KEYCLOAK_CLIENT_SECRET = credentials('skuldaring_keycloak_client_secret')
+  }
+
   stages {
-    stage('build') {
+    stage('install dependencies') {
+      agent { 
+        docker {
+          image 'elixir:1.10'
+        }
+      }
       steps {
+        sh 'mix local.hex --force'
+        sh 'mix local.rebar'
         sh 'mix deps.get'
-        sh 'cd assets && npm i && npm run deploy'
+      }
+    }
+    stage('build assets') {
+      agent { 
+        docker {
+          image 'node:10'
+        }
+      }
+      steps {
+        sh 'cd assets && npm ci && npm run deploy'
       }
     }
     stage('test') {
+      agent { 
+        docker {
+          image 'elixir:1.10'
+        }
+      }
       steps {
+        sh 'mix local.hex --force'
+        sh 'mix local.rebar'
+        sh 'mix deps.get'
+        sh 'mix ecto.migrate'
         sh 'mix test'
       }
     }
-  }
+ }
 }
