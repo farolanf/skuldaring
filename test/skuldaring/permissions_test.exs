@@ -4,50 +4,54 @@ defmodule Skuldaring.PermissionsTest do
   alias Acx.Enforcer
   alias Skuldaring.Permissions
 
-  describe "enforcer" do
-
-    @cfile "test/data/rbac.conf"
-    @pfile "test/data/policy.csv"
-
-    setup do
-      {:ok, enforcer} = Enforcer.init(@cfile)
-
-      g2 = fn r, p ->
-        roles = String.split r, ~r{,\s*}
-        p in roles
-      end
-
-      enforcer = enforcer
-      |> Enforcer.add_fun({:g2, g2})
-      |> Enforcer.load_policies!(@pfile)
-      |> Enforcer.load_mapping_policies!(@pfile)
-
-      %{enforcer: enforcer}
-    end
-
-    test "direct role", %{enforcer: enforcer} do
-      assert Enforcer.allow?(enforcer, ["reader", "article", "read"]) == true
-    end
-
-    test "indirect role", %{enforcer: enforcer} do
-      assert Enforcer.allow?(enforcer, ["admin", "article", "read"]) == true
-    end
-
-    test "multiple roles", %{enforcer: enforcer} do
-      assert Enforcer.allow?(enforcer, ["reader,owner", "article", "delete"]) == true
-    end
-
+  defmodule User do
+    defstruct [
+      id: 1
+    ]
   end
+
+  defmodule Article do
+    defstruct [
+      user_id: 1
+    ]
+  end
+
+  @cfile "test/data/rbac.conf"
+  @pfile "test/data/policy.csv"
 
   describe "permissions" do
 
     setup do
-      {:ok, permissions} = Permissions.init
+      {:ok, permissions} = Permissions.init(@cfile, @pfile)
       %{permissions: permissions}
     end
 
-    test "allow?/4", %{permissions: permissions} do
-      Permissions.allow?(permissions, "reader,owner", "article", "delete")
+    test "direct role", %{permissions: permissions} do
+      assert Permissions.allow?(permissions, "reader", "article", "read") == true
+    end
+
+    test "indirect role", %{permissions: permissions} do
+      assert Permissions.allow?(permissions, "author", "article", "read") == true
+    end
+
+    test "multiple roles", %{permissions: permissions} do
+      assert Permissions.allow?(permissions, "reader,author", "article", "update") == true
+    end
+
+    test "* objects", %{permissions: permissions} do
+      assert Permissions.allow?(permissions, "allow_objs", "unknown_obj", "read") == true
+    end
+
+    test "* actions", %{permissions: permissions} do
+      assert Permissions.allow?(permissions, "allow_acts", "article", "unknown_act") == true
+    end
+
+    test "owner role", %{permissions: permissions} do
+      user = %User{}
+      article = %Article{}
+      IO.inspect user, label: "user"
+      IO.inspect article, label: "article"
+      assert Permissions.allow?(permissions, user, article, "delete") == true
     end
 
   end
