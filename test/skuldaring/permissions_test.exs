@@ -67,4 +67,26 @@ defmodule Skuldaring.PermissionsTest do
     end
 
   end
+
+  describe "permissions singleton" do
+
+    requests = [
+      {"guest", "article", "read", true},
+      {"reader", "article", "read", true},
+      {"author", "article", "read", true},
+      {"author", "article", "update", true},
+      {"owner", "article", "delete", true},
+      {"allow_objs", "unknown", "read", true},
+      {"allow_acts", "article", "unknown", true},
+      {"admin", "unknown", "unknown", true},
+      {"guest", "article", "update", false}
+    ]
+
+    Enum.each(requests, fn {sub, obj, act, res} ->
+      test "#{sub}, #{obj}, #{act} = #{res}" do
+        assert Permissions.allow?(unquote(sub), unquote(obj), unquote(act)) == unquote(res)
+      end
+    end)
+
+  end
 end

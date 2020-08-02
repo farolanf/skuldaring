@@ -20,6 +20,12 @@ defmodule Skuldaring.Application do
       {OpenIDConnect.Worker, Application.get_env(:skuldaring, :openid_connect_providers)}
     ]
 
+    children = if Mix.env() == :test do
+      children ++ [{Skuldaring.Permissions, [cfile: "test/data/rbac.conf", pfile: "test/data/policy.csv"]}]
+    else
+      children ++ [Skuldaring.Permissions]
+    end
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Skuldaring.Supervisor]
