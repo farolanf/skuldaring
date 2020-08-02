@@ -1,0 +1,8 @@
+p, reader, article, read
+p, author, article, create
+p, author, article, update
+p, admin, article, delete
+p, owner, article, delete
+
+g, author, reader
+g, admin, author
