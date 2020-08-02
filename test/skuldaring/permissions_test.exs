@@ -46,6 +46,25 @@ defmodule Skuldaring.PermissionsTest do
       assert Permissions.allow?(permissions, user, article, "delete") == true
     end
 
-  end
+    test "fail on action", %{permissions: permissions} do
+      assert Permissions.allow?(permissions, "reader", "article", "update") == false
+    end
 
+    test "fail on object", %{permissions: permissions} do
+      assert Permissions.allow?(permissions, "reader", "unknown_obj", "read") == false
+    end
+
+    test "fail with objects", %{permissions: permissions} do
+      user = %User{id: 1, roles: ["reader"]}
+      article = %Article{user_id: 2}
+      assert Permissions.allow?(permissions, user, article, "delete") == false
+    end
+
+    test "guest", %{permissions: permissions} do
+      user = %User{id: 100, roles: []}
+      article = %Article{user_id: 1}
+      assert Permissions.allow?(permissions, user, article, "read") == true
+    end
+
+  end
 end

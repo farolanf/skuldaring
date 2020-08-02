@@ -3,6 +3,7 @@ p, admin, *, *
 p, allow_objs, *, read
 p, allow_acts, article, *
 
+p, guest, article, read
 p, reader, article, read
 p, author, article, create
 p, author, article, update

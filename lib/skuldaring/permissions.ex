@@ -41,7 +41,7 @@ defmodule Skuldaring.Permissions do
       end
     end
 
-    roles = []
+    roles = ["guest"]
     |> add_owner.()
     |> Enum.concat(user.roles)
     |> Enum.join(",")
