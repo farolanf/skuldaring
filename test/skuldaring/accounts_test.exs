@@ -6,7 +6,7 @@ defmodule Skuldaring.AccountsTest do
   describe "users" do
     alias Skuldaring.Accounts.User
 
-    @valid_attrs %{email: "some email", first_name: "some first_name", last_name: "some last_name", username: "some username"}
+    @valid_attrs %{email: "some email", first_name: "some first_name", last_name: "some last_name", username: "some username", roles: []}
     @update_attrs %{email: "some updated email", first_name: "some updated first_name", last_name: "some updated last_name", username: "some updated username"}
     @invalid_attrs %{email: nil, first_name: nil, last_name: nil, username: nil}
 
