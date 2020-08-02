@@ -1,16 +1,16 @@
 use Mix.Config
 
 frontend_url = System.get_env("FRONTEND_URL") ||
-  raise "env FRONTEND_URL is missing"
+  IO.puts "env FRONTEND_URL is missing"
 
 keycloak_url = System.get_env("KEYCLOAK_URL") ||
-  raise "env KEYCLOAK_URL is missing"
+  IO.puts "env KEYCLOAK_URL is missing"
 
 keycloak_client_id = System.get_env("KEYCLOAK_CLIENT_ID") ||
-  raise "env KEYCLOAK_CLIENT_ID is missing"
+  IO.puts "env KEYCLOAK_CLIENT_ID is missing"
 
 keycloak_client_secret = System.get_env("KEYCLOAK_CLIENT_SECRET") ||
-  raise "env KEYCLOAK_CLIENT_SECRET is missing"
+  IO.puts "env KEYCLOAK_CLIENT_SECRET is missing"
 
 config :skuldaring, :openid_connect_providers,
   skuldaring: [

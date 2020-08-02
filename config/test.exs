@@ -2,7 +2,7 @@ use Mix.Config
 
 database_url =
   System.get_env("TEST_DATABASE_URL") ||
-    raise """
+    IO.puts """
     environment variable TEST_DATABASE_URL is missing.
     For example: ecto://USER:PASS@HOST/DATABASE
     """
