@@ -1,8 +1,10 @@
+p, allow_objs, *, read
+p, allow_acts, article, *
+
 p, reader, article, read
 p, author, article, create
 p, author, article, update
-p, admin, article, delete
-p, owner, article, delete
+p, owner, article, *
 
 g, author, reader
 g, admin, author
