@@ -88,5 +88,11 @@ defmodule Skuldaring.PermissionsTest do
       end
     end)
 
+    test "with objects" do
+      user = %User{id: 1, roles: []}
+      article = %Article{user_id: 1}
+      assert Permissions.allow?(user, article, "delete") == true
+    end
+
   end
 end
