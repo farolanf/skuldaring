@@ -26,7 +26,9 @@ defmodule Skuldaring.Permissions do
     {:ok, %__MODULE__{enforcer: enforcer}}
   end
 
-  def allow?(%__MODULE__{enforcer: enforcer}, roles, obj, act) do
+  def allow?(%__MODULE__{enforcer: enforcer}, roles, obj, act)
+      when is_binary(roles)
+      when is_binary(obj) do
     Enforcer.allow?(enforcer, [roles, obj, act])
   end
 
@@ -44,13 +46,16 @@ defmodule Skuldaring.Permissions do
     |> Enum.concat(user.roles)
     |> Enum.join(",")
 
-    allow?(struct, roles, get_obj_type(obj), act)
+    obj_type = get_obj_type(obj)
+
+    allow?(struct, roles, obj_type, act)
   end
 
   defp get_obj_type(%obj_name{}) do
     obj_name
-    |> Module.split
-    |> List.last
+    |> Module.split()
+    |> List.last()
+    |> String.downcase()
   end
 
 end

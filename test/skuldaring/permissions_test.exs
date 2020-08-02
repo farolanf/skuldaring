@@ -1,14 +1,8 @@
 defmodule Skuldaring.PermissionsTest do
   use Skuldaring.DataCase, async: true
 
-  alias Acx.Enforcer
   alias Skuldaring.Permissions
-
-  defmodule User do
-    defstruct [
-      id: 1
-    ]
-  end
+  alias Skuldaring.Accounts.User
 
   defmodule Article do
     defstruct [
@@ -47,10 +41,8 @@ defmodule Skuldaring.PermissionsTest do
     end
 
     test "owner role", %{permissions: permissions} do
-      user = %User{}
+      user = %User{id: 1, roles: ["reader"]}
       article = %Article{}
-      IO.inspect user, label: "user"
-      IO.inspect article, label: "article"
       assert Permissions.allow?(permissions, user, article, "delete") == true
     end
 
