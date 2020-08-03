@@ -120,4 +120,63 @@ defmodule Skuldaring.SchoolsTest do
       assert %Ecto.Changeset{} = Schools.change_room(room)
     end
   end
+
+  describe "school_roles" do
+    alias Skuldaring.Schools.SchoolRole
+
+    @valid_attrs %{role: "some role"}
+    @update_attrs %{role: "some updated role"}
+    @invalid_attrs %{role: nil}
+
+    def school_role_fixture(attrs \\ %{}) do
+      {:ok, school_role} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Schools.create_school_role()
+
+      school_role
+    end
+
+    test "list_school_roles/0 returns all school_roles" do
+      school_role = school_role_fixture()
+      assert Schools.list_school_roles() == [school_role]
+    end
+
+    test "get_school_role!/1 returns the school_role with given id" do
+      school_role = school_role_fixture()
+      assert Schools.get_school_role!(school_role.id) == school_role
+    end
+
+    test "create_school_role/1 with valid data creates a school_role" do
+      assert {:ok, %SchoolRole{} = school_role} = Schools.create_school_role(@valid_attrs)
+      assert school_role.role == "some role"
+    end
+
+    test "create_school_role/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Schools.create_school_role(@invalid_attrs)
+    end
+
+    test "update_school_role/2 with valid data updates the school_role" do
+      school_role = school_role_fixture()
+      assert {:ok, %SchoolRole{} = school_role} = Schools.update_school_role(school_role, @update_attrs)
+      assert school_role.role == "some updated role"
+    end
+
+    test "update_school_role/2 with invalid data returns error changeset" do
+      school_role = school_role_fixture()
+      assert {:error, %Ecto.Changeset{}} = Schools.update_school_role(school_role, @invalid_attrs)
+      assert school_role == Schools.get_school_role!(school_role.id)
+    end
+
+    test "delete_school_role/1 deletes the school_role" do
+      school_role = school_role_fixture()
+      assert {:ok, %SchoolRole{}} = Schools.delete_school_role(school_role)
+      assert_raise Ecto.NoResultsError, fn -> Schools.get_school_role!(school_role.id) end
+    end
+
+    test "change_school_role/1 returns a school_role changeset" do
+      school_role = school_role_fixture()
+      assert %Ecto.Changeset{} = Schools.change_school_role(school_role)
+    end
+  end
 end

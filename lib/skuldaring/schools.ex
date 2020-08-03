@@ -197,4 +197,100 @@ defmodule Skuldaring.Schools do
   def change_room(%Room{} = room, attrs \\ %{}) do
     Room.changeset(room, attrs)
   end
+
+  alias Skuldaring.Schools.SchoolRole
+
+  @doc """
+  Returns the list of school_roles.
+
+  ## Examples
+
+      iex> list_school_roles()
+      [%SchoolRole{}, ...]
+
+  """
+  def list_school_roles do
+    Repo.all(SchoolRole)
+  end
+
+  @doc """
+  Gets a single school_role.
+
+  Raises `Ecto.NoResultsError` if the School role does not exist.
+
+  ## Examples
+
+      iex> get_school_role!(123)
+      %SchoolRole{}
+
+      iex> get_school_role!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_school_role!(id), do: Repo.get!(SchoolRole, id)
+
+  @doc """
+  Creates a school_role.
+
+  ## Examples
+
+      iex> create_school_role(%{field: value})
+      {:ok, %SchoolRole{}}
+
+      iex> create_school_role(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_school_role(attrs \\ %{}) do
+    %SchoolRole{}
+    |> SchoolRole.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a school_role.
+
+  ## Examples
+
+      iex> update_school_role(school_role, %{field: new_value})
+      {:ok, %SchoolRole{}}
+
+      iex> update_school_role(school_role, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_school_role(%SchoolRole{} = school_role, attrs) do
+    school_role
+    |> SchoolRole.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a school_role.
+
+  ## Examples
+
+      iex> delete_school_role(school_role)
+      {:ok, %SchoolRole{}}
+
+      iex> delete_school_role(school_role)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_school_role(%SchoolRole{} = school_role) do
+    Repo.delete(school_role)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking school_role changes.
+
+  ## Examples
+
+      iex> change_school_role(school_role)
+      %Ecto.Changeset{data: %SchoolRole{}}
+
+  """
+  def change_school_role(%SchoolRole{} = school_role, attrs \\ %{}) do
+    SchoolRole.changeset(school_role, attrs)
+  end
 end
