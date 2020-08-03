@@ -2,6 +2,8 @@ defmodule Skuldaring.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Skuldaring.Schools.School
+
   schema "users" do
     field :account_id, :string
     field :email, :string
@@ -9,6 +11,8 @@ defmodule Skuldaring.Accounts.User do
     field :first_name, :string
     field :last_name, :string
     field :roles, {:array, :string}
+
+    has_many :schools, School
 
     timestamps()
   end
