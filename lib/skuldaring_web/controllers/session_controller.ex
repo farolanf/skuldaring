@@ -15,7 +15,7 @@ defmodule SkuldaringWeb.SessionController do
     else
       {:error, :invalid_user, claims} ->
         user_params = %{
-          account_id: claims["user_id"],
+          account_id: claims["sub"],
           email: claims["email"],
           username: claims["preferred_username"],
           first_name: claims["given_name"],
