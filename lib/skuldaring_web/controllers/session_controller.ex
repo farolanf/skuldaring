@@ -3,8 +3,8 @@ defmodule SkuldaringWeb.SessionController do
 
   require Logger
 
-  alias Ecto.Changeset
   alias Skuldaring.Repo
+  alias Skuldaring.Accounts
   alias Skuldaring.Accounts.User
 
   def new(conn, params) do
@@ -19,16 +19,14 @@ defmodule SkuldaringWeb.SessionController do
           |> redirect(to: "/")
         nil ->
           user_params = %{
+            account_id: claims["user_id"],
             email: claims["email"],
             username: claims["preferred_username"],
             first_name: claims["given_name"],
             last_name: claims["family_name"],
           }
 
-          {:ok, user} = %User{}
-          |> User.changeset(user_params)
-          |> Changeset.put_change(:account_id, claims["user_id"])
-          |> Repo.insert()
+          {:ok, user} = Accounts.create_user(user_params)
 
           conn
           |> put_session(:user_id, user.id)
