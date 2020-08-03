@@ -22,6 +22,7 @@
             <a href="#">Akun</a>
             <ul class="menu vertical is-dropdown-submenu">
               <li><h6 class="subheader padding-top-1 padding-horizontal-1"><%= @user.username %></h6></li>
+              <li><%= link "Profil", to: @profile_url %></li>
               <li><%= link "Keluar", to: @logout_url %></li>
             </ul>
           </li>

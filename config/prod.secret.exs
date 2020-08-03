@@ -65,4 +65,5 @@ config :skuldaring, :openid_connect_providers,
 
 config :skuldaring,
   logout_url: "#{keycloak_url}/auth/realms/skuldaring/protocol/openid-connect/logout?redirect_uri=#{frontend_url}/logout",
-  registration_url: "#{keycloak_url}/auth/realms/skuldaring/protocol/openid-connect/registrations?client_id=skuldaring&redirect_uri=#{frontend_url}/session/new&response_type=code&scope=openid+email+profile"
+  registration_url: "#{keycloak_url}/auth/realms/skuldaring/protocol/openid-connect/registrations?client_id=skuldaring&redirect_uri=#{frontend_url}/session/new&response_type=code&scope=openid+email+profile",
+  profile_url: "#{keycloak_url}/auth/realms/skuldaring/account"
