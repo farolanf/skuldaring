@@ -1,14 +1,14 @@
-defmodule Skuldaring.Repo.Migrations.CreateSchools do
+defmodule Skuldaring.Repo.Migrations.CreateRooms do
   use Ecto.Migration
 
   def change do
-    create table(:schools) do
+    create table(:rooms) do
       add :name, :string, null: false
       add :user_id, references(:users), null: false
 
       timestamps()
     end
 
-    create index(:schools, [:user_id])
+    create index(:rooms, [:user_id])
   end
 end
