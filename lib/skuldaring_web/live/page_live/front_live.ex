@@ -3,16 +3,18 @@ defmodule SkuldaringWeb.PageLive.FrontLive do
 
   require Logger
 
-  alias Skuldaring.{Repo, Accounts.User}
+  alias Skuldaring.Repo
+  alias Skuldaring.Accounts.User
 
   @impl true
   def mount(_params, session, socket) do
     Logger.debug "live session = #{inspect session}"
-    socket = case session["user_id"] do
-      nil -> socket
-      user_id ->
-        socket
-        |> assign_new(:user, fn -> Repo.get(User, user_id) end)
+    socket = with user_id when not is_nil(user_id) <- session["user_id"],
+      user when not is_nil(user) <- Repo.get(User, user_id)
+    do
+      socket |> assign(:user, user)
+    else
+      _ -> socket
     end
     {:ok, socket}
   end

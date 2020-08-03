@@ -3,6 +3,8 @@ defmodule Skuldaring.Accounts do
   The Accounts context.
   """
 
+  require Logger
+
   import Ecto.Query, warn: false
   alias Skuldaring.Repo
 
@@ -101,4 +103,17 @@ defmodule Skuldaring.Accounts do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  def verify_token(token) do
+    with {:ok, claims} <- OpenIDConnect.verify(:skuldaring, token) do
+      Logger.debug "claims = #{inspect claims}"
+      case Repo.get_by(User, account_id: claims["sub"]) do
+        %User{} = user -> {:ok, user}
+        _ -> {:error, :invalid_user, claims}
+      end
+    else
+      _ -> {:error, :verify}
+    end
+  end
+
 end
