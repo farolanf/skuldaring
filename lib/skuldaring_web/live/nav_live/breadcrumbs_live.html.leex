@@ -3,7 +3,7 @@
     <ul class="breadcrumbs padding-1">
       <%= for el <- @path do %>
         <%= case el do
-          %{label: label, to: to} -> content_tag(:li, link(label, to: to))
+          {to, label} -> content_tag(:li, link(label, to: to))
           label -> content_tag(:li, label)
         end %>
       <% end %>
