@@ -3,6 +3,7 @@ defmodule SkuldaringWeb.SessionController do
 
   require Logger
 
+  alias Ecto.Changeset
   alias Skuldaring.Repo
   alias Skuldaring.Accounts.User
 
@@ -11,7 +12,7 @@ defmodule SkuldaringWeb.SessionController do
         {:ok, claims} <- OpenIDConnect.verify(:skuldaring, tokens["id_token"]) do
       Logger.debug "claims = #{inspect claims}"
 
-      case Repo.get_by(User, email: claims["email"]) do
+      case Repo.get_by(User, account_id: claims["user_id"]) do
         %User{} = user ->
           conn
           |> put_session(:user_id, user.id)
@@ -26,9 +27,8 @@ defmodule SkuldaringWeb.SessionController do
 
           {:ok, user} = %User{}
           |> User.changeset(user_params)
+          |> Changeset.put_change(:account_id, claims["user_id"])
           |> Repo.insert()
-
-          Logger.debug "created user #{inspect user}"
 
           conn
           |> put_session(:user_id, user.id)

@@ -3,6 +3,7 @@ defmodule Skuldaring.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
+    field :account_id, :string
     field :email, :string
     field :username, :string
     field :first_name, :string
