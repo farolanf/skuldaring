@@ -18,5 +18,6 @@ defmodule Skuldaring.Accounts.User do
     user
     |> cast(attrs, [:email, :username, :first_name, :last_name, :roles])
     |> validate_required([:email, :username, :first_name, :last_name])
+    |> unique_constraint(:email)
   end
 end
