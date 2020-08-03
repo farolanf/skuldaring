@@ -3,11 +3,14 @@ defmodule Skuldaring.Schools.School do
   import Ecto.Changeset
 
   alias Skuldaring.Accounts.User
+  alias Skuldaring.Schools.{Room, SchoolRole}
 
   schema "schools" do
     field :name, :string
 
     belongs_to :user, User
+    has_many :rooms, Room
+    has_many :school_roles, SchoolRole
 
     timestamps()
   end
