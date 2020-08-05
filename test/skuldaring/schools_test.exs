@@ -1,7 +1,25 @@
 defmodule Skuldaring.SchoolsTest do
   use Skuldaring.DataCase
 
+  alias Skuldaring.Accounts
+  alias Skuldaring.Accounts.User
   alias Skuldaring.Schools
+
+  def create_user do
+    Accounts.create_user(%{
+      account_id: "1",
+      email: "a@b.c",
+      username: "u",
+      first_name: "f",
+      last_name: "l"
+    })
+  end
+
+  def create_school(user_id) do
+    %{name: "school"}
+    |> Map.merge(%{user_id: user_id})
+    |> Schools.create_school()
+  end
 
   describe "schools" do
     alias Skuldaring.Schools.School
@@ -11,9 +29,12 @@ defmodule Skuldaring.SchoolsTest do
     @invalid_attrs %{name: nil}
 
     def school_fixture(attrs \\ %{}) do
+      {:ok, user} = create_user()
+
       {:ok, school} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Map.merge(%{user_id: user.id})
         |> Schools.create_school()
 
       school
@@ -30,7 +51,12 @@ defmodule Skuldaring.SchoolsTest do
     end
 
     test "create_school/1 with valid data creates a school" do
-      assert {:ok, %School{} = school} = Schools.create_school(@valid_attrs)
+      {:ok, user} = create_user()
+
+      assert {:ok, %School{} = school} = @valid_attrs
+      |> Map.merge(%{user_id: user.id})
+      |> Schools.create_school()
+
       assert school.name == "some name"
     end
 
@@ -70,9 +96,13 @@ defmodule Skuldaring.SchoolsTest do
     @invalid_attrs %{name: nil}
 
     def room_fixture(attrs \\ %{}) do
+      {:ok, user} = create_user()
+      {:ok, school} = create_school(user.id)
+
       {:ok, room} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Map.merge(%{user_id: user.id, school_id: school.id})
         |> Schools.create_room()
 
       room
@@ -89,7 +119,13 @@ defmodule Skuldaring.SchoolsTest do
     end
 
     test "create_room/1 with valid data creates a room" do
-      assert {:ok, %Room{} = room} = Schools.create_room(@valid_attrs)
+      {:ok, user} = create_user()
+      {:ok, school} = create_school(user.id)
+
+      assert {:ok, %Room{} = room} = @valid_attrs
+      |> Map.merge(%{user_id: user.id, school_id: school.id})
+      |> Schools.create_room()
+
       assert room.name == "some name"
     end
 
@@ -129,9 +165,13 @@ defmodule Skuldaring.SchoolsTest do
     @invalid_attrs %{role: nil}
 
     def school_role_fixture(attrs \\ %{}) do
+      {:ok, user} = create_user()
+      {:ok, school} = create_school(user.id)
+
       {:ok, school_role} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Map.merge(%{user_id: user.id, school_id: school.id})
         |> Schools.create_school_role()
 
       school_role
@@ -148,7 +188,13 @@ defmodule Skuldaring.SchoolsTest do
     end
 
     test "create_school_role/1 with valid data creates a school_role" do
-      assert {:ok, %SchoolRole{} = school_role} = Schools.create_school_role(@valid_attrs)
+      {:ok, user} = create_user()
+      {:ok, school} = create_school(user.id)
+
+      assert {:ok, %SchoolRole{} = school_role} = @valid_attrs
+      |> Map.merge(%{user_id: user.id, school_id: school.id})
+      |> Schools.create_school_role()
+
       assert school_role.role == "some role"
     end
 

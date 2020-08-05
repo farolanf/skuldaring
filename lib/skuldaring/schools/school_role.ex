@@ -19,5 +19,7 @@ defmodule Skuldaring.Schools.SchoolRole do
     school_role
     |> cast(attrs, [:role, :school_id, :user_id])
     |> validate_required([:role, :school_id, :user_id])
+    |> foreign_key_constraint(:school_id)
+    |> foreign_key_constraint(:user_id)
   end
 end
