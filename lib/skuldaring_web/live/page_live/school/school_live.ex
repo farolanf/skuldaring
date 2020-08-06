@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.FrontLive do
+defmodule SkuldaringWeb.School.SchoolLive do
   use SkuldaringWeb, :live_view
 
   require Logger
@@ -10,14 +10,6 @@ defmodule SkuldaringWeb.FrontLive do
     Logger.debug "live session = #{inspect session}"
     socket = handle_session(socket, session)
     {:ok, socket}
-  end
-
-  @impl true
-  def handle_params(_params, uri, socket) do
-    socket = socket
-    |> assign(:uri, URI.parse(uri))
-
-    {:noreply, socket}
   end
 
 end

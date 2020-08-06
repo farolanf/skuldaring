@@ -20,7 +20,13 @@ defmodule SkuldaringWeb.Router do
     get "/session/new", SessionController, :new
     get "/logout", SessionController, :logout
 
-    live "/", PageLive.FrontLive, :index
+    live "/", FrontLive, :index
+  end
+
+  scope "/sekolah", SkuldaringWeb.School, as: :school do
+    pipe_through :browser
+
+    live "/", SchoolLive, :index
   end
 
   scope "/admin", SkuldaringWeb do
