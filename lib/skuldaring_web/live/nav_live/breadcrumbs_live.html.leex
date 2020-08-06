@@ -1,4 +1,4 @@
-<%= if assigns[:path] do %>
+<%= if assigns[:path] && length(@path) > 0 do %>
   <nav aria-label="You are here:" role="navigation">
     <ul class="breadcrumbs padding-1">
       <%= for el <- @path do %>
