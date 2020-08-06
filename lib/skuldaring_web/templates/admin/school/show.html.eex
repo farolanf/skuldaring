@@ -1,0 +1,8 @@
+<h1>Show School</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.admin_school_path(@conn, :edit, @school) %></span>
+<span><%= link "Back", to: Routes.admin_school_path(@conn, :index) %></span>

@@ -17,17 +17,22 @@
         </li>
       <% end %>
       <%= if assigns[:user] do %>
-        <ul class="dropdown menu" data-dropdown-menu>
-          <li class="is-dropdown-submenu-parent">
-            <a href="#">Akun</a>
-            <ul class="menu vertical is-dropdown-submenu">
-              <li><h6 class="subheader padding-top-1 padding-horizontal-1"><%= @user.username %></h6></li>
-              <li><%= link "Profil", to: @profile_url %></li>
-              <li><%= live_patch "Sekolah", to: Routes.school_school_path(@socket, :index) %></li>
-              <li><%= link "Keluar", to: @logout_url %></li>
-            </ul>
-          </li>
-        </ul>
+        <%= if @user.id == 1 do %>
+          <li><%= link "Admin", to: Routes.admin_front_path(@socket, :index) %></li>
+        <% end %>
+        <li>
+          <ul class="dropdown menu" data-dropdown-menu>
+            <li class="is-dropdown-submenu-parent">
+              <a href="#">Akun</a>
+              <ul class="menu vertical is-dropdown-submenu">
+                <li><h6 class="subheader padding-top-1 padding-horizontal-1"><%= @user.username %></h6></li>
+                <li><%= link "Profil", to: @profile_url %></li>
+                <li><%= live_patch "Sekolah", to: Routes.school_school_path(@socket, :index) %></li>
+                <li><%= link "Keluar", to: @logout_url %></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       <% end %>
     </ul>
   </div>

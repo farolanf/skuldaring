@@ -1,6 +1,9 @@
 defmodule SkuldaringWeb.Router do
   use SkuldaringWeb, :router
 
+  alias Skuldaring.Repo
+  alias Skuldaring.Accounts.User
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +11,10 @@ defmodule SkuldaringWeb.Router do
     plug :put_root_layout, {SkuldaringWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+  end
+
+  pipeline :admin do
+    plug :put_layout, {SkuldaringWeb.LayoutView, :admin}
   end
 
   pipeline :api do
@@ -29,8 +36,28 @@ defmodule SkuldaringWeb.Router do
     live "/", SchoolLive, :index
   end
 
-  scope "/admin", SkuldaringWeb do
-    # pipe_through [:browser, :authenticate_user]
+  scope "/admin", SkuldaringWeb.Admin, as: :admin do
+    pipe_through [:browser, :authorize_check, :admin]
+
+    get "/", AdminController, :index
+
+    resources "/schools", SchoolController
+  end
+
+  def authorize_check(conn, _opts) do
+    case get_session(conn) do
+      %{"user_id" => user_id} ->
+        with user when not is_nil(user) <- Repo.get(User, user_id),
+          1 <- user.id
+        do
+          conn
+        else
+          _ -> conn
+            |> put_flash(:error, "Unauthorized")
+            |> redirect(to: "/")
+        end
+      _ -> conn
+    end
   end
 
   # Other scopes may use custom stacks.

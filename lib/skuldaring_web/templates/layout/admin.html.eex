@@ -1,0 +1,2 @@
+Admin Topbar
+<%= @inner_content %>
