@@ -18,7 +18,7 @@
       <% end %>
       <%= if assigns[:user] do %>
         <%= if @user.id == 1 do %>
-          <li><%= link "Admin", to: Routes.admin_front_path(@socket, :index) %></li>
+          <li><%= link "Admin", to: Routes.admin_admin_path(@socket, :index) %></li>
         <% end %>
         <li>
           <ul class="dropdown menu" data-dropdown-menu>
