@@ -21,8 +21,6 @@ defmodule SkuldaringWeb.Router do
     get "/logout", SessionController, :logout
 
     live "/", PageLive.FrontLive, :index
-    live "/login", PageLive.FrontLive, :login
-    live "/register", PageLive.FrontLive, :register
   end
 
   scope "/admin", SkuldaringWeb do
