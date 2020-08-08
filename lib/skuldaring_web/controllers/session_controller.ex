@@ -27,8 +27,12 @@ defmodule SkuldaringWeb.SessionController do
         conn
         |> put_session(:user_id, user.id)
         |> redirect(to: "/")
-      _ ->
+      {:error, _from, %{body: body}} ->
+        Logger.error body
         conn
+        |> put_flash(:error, "Login failed")
+        |> redirect(to: "/")
+      _ -> conn
         |> put_flash(:error, "Login failed")
         |> redirect(to: "/")
     end
