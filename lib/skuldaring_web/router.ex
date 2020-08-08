@@ -14,7 +14,7 @@ defmodule SkuldaringWeb.Router do
   end
 
   pipeline :admin do
-    plug :put_layout, {SkuldaringWeb.LayoutView, :admin}
+    plug :put_root_layout, {SkuldaringWeb.LayoutView, :admin}
   end
 
   pipeline :api do
