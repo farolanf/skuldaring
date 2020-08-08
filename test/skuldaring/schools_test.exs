@@ -2,7 +2,6 @@ defmodule Skuldaring.SchoolsTest do
   use Skuldaring.DataCase
 
   alias Skuldaring.Accounts
-  alias Skuldaring.Accounts.User
   alias Skuldaring.Schools
 
   def create_user do
