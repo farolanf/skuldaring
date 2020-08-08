@@ -1,7 +1,10 @@
 <h1>Show School</h1>
 
 <ul>
-
+  <li>
+    <strong>Name:</strong>
+    <%= @school.name %>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: Routes.admin_school_path(@conn, :edit, @school) %></span>
