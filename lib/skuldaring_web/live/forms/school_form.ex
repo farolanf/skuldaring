@@ -4,6 +4,11 @@ defmodule SkuldaringWeb.SchoolForm do
   alias Skuldaring.Schools
 
   @impl true
+  def mount(socket) do
+    {:ok, assign(socket, touched: false)}
+  end
+
+  @impl true
   def update(%{school: school} = assigns, socket) do
     changeset = Schools.change_school(school)
 
@@ -15,7 +20,19 @@ defmodule SkuldaringWeb.SchoolForm do
   end
 
   @impl true
+  def handle_event("validate", %{"school" => params}, socket) do
+    changeset = socket.assigns.school
+    |> Schools.change_school(params)
+    |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, changeset: changeset, touched: true)}
+  end
+
+  @impl true
   def handle_event("save", %{"school" => params}, socket) do
+    socket = socket
+    |> assign(touched: true)
+
     save_post(socket, socket.assigns.action, params)
   end
 

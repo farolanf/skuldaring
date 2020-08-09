@@ -13,8 +13,7 @@ defmodule SkuldaringWeb.ErrorHelpers do
       content_tag(:span, translate_error(error),
         [
           phx_feedback_for: input_id(form, field),
-          class: "form-error",
-          style: "display: block"
+          class: "form-error is-visible"
         ] |> Keyword.merge(opts)
       )
     end)
