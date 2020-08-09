@@ -11,7 +11,7 @@
     <tbody>
       <%= for school <- @schools do %>
         <tr>
-          <td><%= school.name %></td>
+          <td><%= live_patch school.name, to: Routes.school_school_front_path(@socket, :index, school.id) %></td>
           <td>
             <ul class="menu">
               <li><%= live_patch "Ubah", to: Routes.school_school_path(@socket, :edit, school) %></li>

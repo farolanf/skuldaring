@@ -2,7 +2,6 @@ defmodule SkuldaringWeb.Admin.SchoolController do
   use SkuldaringWeb, :controller
 
   alias Skuldaring.Accounts
-  alias Skuldaring.Accounts.User
   alias Skuldaring.Schools
   alias Skuldaring.Schools.School
 
