@@ -48,6 +48,7 @@ defmodule Skuldaring.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:openid_connect, "~> 0.2.2"},
+      {:recase, "~> 0.5"},
       {:acx, git: "https://github.com/ngoclinhng/acx.git"}
     ]
   end
