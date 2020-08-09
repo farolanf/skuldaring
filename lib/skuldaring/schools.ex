@@ -4,9 +4,25 @@ defmodule Skuldaring.Schools do
   """
 
   import Ecto.Query, warn: false
-  alias Skuldaring.Repo
 
+  alias Skuldaring.Repo
   alias Skuldaring.Schools.School
+
+  defp params_where(%{} = params) do
+    params
+    |> Map.keys()
+    |> Enum.reduce([], fn key, where ->
+      value = IndifferentAccess.get(params, key)
+      Keyword.put(where, key, value)
+    end)
+  end
+
+  def find_schools(%{} = params) do
+    query = from s in School,
+      where: ^params_where(params)
+
+    list_schools(query)
+  end
 
   @doc """
   Returns the list of schools.
@@ -17,8 +33,8 @@ defmodule Skuldaring.Schools do
       [%School{}, ...]
 
   """
-  def list_schools do
-    School
+  def list_schools(query \\ School) do
+    query
     |> Repo.all()
     |> Repo.preload([:user])
   end
