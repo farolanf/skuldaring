@@ -13,7 +13,7 @@ defmodule SkuldaringWeb.School.SchoolLive do
 
     socket = socket
     |> handle_session(session)
-    |> assign(:schools, Schools.find_schools(%{user_id: 1}))
+    |> assign(:schools, Schools.find_schools(%{where: %{name: "TK Lontar"}}))
 
     {:ok, socket}
   end

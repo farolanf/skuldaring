@@ -1,5 +1,7 @@
 defmodule Skuldaring.Utils do
 
+  import Ecto.Query
+
   def get_breadcrumbs(url_path, paths) when is_binary(url_path) do
     paths = Enum.sort_by(
       paths,
@@ -26,6 +28,24 @@ defmodule Skuldaring.Utils do
     else
       breadcrumbs
     end
+  end
+
+  def find_query(model, %{} = params) do
+    query = from s in model
+
+    case params do
+      %{where: where} -> where(query, ^params_where(where))
+      _ -> query
+    end
+  end
+
+  defp params_where(%{} = params) do
+    params
+    |> Map.keys()
+    |> Enum.reduce([], fn key, where ->
+      value = IndifferentAccess.get(params, key)
+      Keyword.put(where, key, value)
+    end)
   end
 
 end
