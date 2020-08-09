@@ -18,7 +18,9 @@ defmodule Skuldaring.Schools do
 
   """
   def list_schools do
-    Repo.all(School)
+    School
+    |> Repo.all()
+    |> Repo.preload([:user])
   end
 
   @doc """
@@ -35,7 +37,7 @@ defmodule Skuldaring.Schools do
       ** (Ecto.NoResultsError)
 
   """
-  def get_school!(id), do: Repo.get!(School, id)
+  def get_school!(id), do: School |> Repo.get!(id) |> Repo.preload(:user)
 
   @doc """
   Creates a school.

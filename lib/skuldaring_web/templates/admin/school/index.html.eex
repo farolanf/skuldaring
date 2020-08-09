@@ -11,6 +11,8 @@
   <tbody>
 <%= for school <- @schools do %>
     <tr>
+      <td><%= school.name %></td>
+      <td><%= school.user.username %></td>
 
       <td>
         <span><%= link "Show", to: Routes.admin_school_path(@conn, :show, school) %></span>

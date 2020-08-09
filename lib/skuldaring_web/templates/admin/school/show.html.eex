@@ -5,6 +5,10 @@
     <strong>Name:</strong>
     <%= @school.name %>
   </li>
+  <li>
+    <strong>User:</strong>
+    <%= @school.user.username %>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: Routes.admin_school_path(@conn, :edit, @school) %></span>
