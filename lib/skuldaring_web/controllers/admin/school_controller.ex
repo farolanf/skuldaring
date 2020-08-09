@@ -1,6 +1,8 @@
 defmodule SkuldaringWeb.Admin.SchoolController do
   use SkuldaringWeb, :controller
 
+  alias Skuldaring.Accounts
+  alias Skuldaring.Accounts.User
   alias Skuldaring.Schools
   alias Skuldaring.Schools.School
 
@@ -11,7 +13,7 @@ defmodule SkuldaringWeb.Admin.SchoolController do
 
   def new(conn, _params) do
     changeset = Schools.change_school(%School{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, user_choices: user_choices())
   end
 
   def create(conn, %{"school" => school_params}) do
@@ -34,7 +36,7 @@ defmodule SkuldaringWeb.Admin.SchoolController do
   def edit(conn, %{"id" => id}) do
     school = Schools.get_school!(id)
     changeset = Schools.change_school(school)
-    render(conn, "edit.html", school: school, changeset: changeset)
+    render(conn, "edit.html", school: school, changeset: changeset, user_choices: user_choices())
   end
 
   def update(conn, %{"id" => id, "school" => school_params}) do
@@ -59,4 +61,13 @@ defmodule SkuldaringWeb.Admin.SchoolController do
     |> put_flash(:info, "School deleted successfully.")
     |> redirect(to: Routes.admin_school_path(conn, :index))
   end
+
+  defp user_choices do
+    case Accounts.list_users() do
+      [%User{}] = users ->
+        Enum.map users, fn user -> {user.username, user.id} end
+      _ -> []
+    end
+  end
+
 end
