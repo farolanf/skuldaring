@@ -34,6 +34,7 @@ defmodule SkuldaringWeb.Router do
     pipe_through :browser
 
     live "/", SchoolLive, :index
+    live "/new", SchoolLive, :new
     live "/:id/edit", SchoolLive, :edit
   end
 

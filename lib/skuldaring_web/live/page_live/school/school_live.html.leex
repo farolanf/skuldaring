@@ -21,6 +21,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= live_patch "Sekolah Baru", to: Routes.school_school_path(@socket, :new) %>
 <% end %>
 
 <%= if @live_action in [:new, :edit] do %>

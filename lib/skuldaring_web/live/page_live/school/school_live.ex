@@ -6,6 +6,7 @@ defmodule SkuldaringWeb.School.SchoolLive do
   import SkuldaringWeb.Helpers
 
   alias Skuldaring.Schools
+  alias Skuldaring.Schools.School
 
   @impl true
   def mount(_params, %{} = session, socket) do
@@ -32,6 +33,12 @@ defmodule SkuldaringWeb.School.SchoolLive do
     socket
     |> assign(:page_title, "Daftar Sekolah")
     |> assign(:school, nil)
+  end
+
+  defp apply_action(socket, :new, _params) do
+    socket
+    |> assign(:page_title, "Sekolah Baru")
+    |> assign(:school, %School{})
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
