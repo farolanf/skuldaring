@@ -64,9 +64,9 @@ defmodule SkuldaringWeb.Admin.SchoolController do
 
   defp user_choices do
     case Accounts.list_users() do
-      [%User{}] = users ->
+      [] -> []
+      users ->
         Enum.map users, fn user -> {user.username, user.id} end
-      _ -> []
     end
   end
 
