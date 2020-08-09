@@ -33,13 +33,19 @@ defmodule Skuldaring.Utils do
   def find_query(model, %{} = params) do
     query = from s in model
 
-    case params do
+    query = case params do
       %{where: where} -> where(query, ^params_where(where))
+      _ -> query
+    end
+
+    case params do
+      %{order: order} ->
+        order_by(query, ^params_order(order))
       _ -> query
     end
   end
 
-  defp params_where(%{} = params) do
+  def params_where(%{} = params) do
     params
     |> Map.keys()
     |> Enum.reduce([], fn key, where ->
@@ -47,5 +53,19 @@ defmodule Skuldaring.Utils do
       Keyword.put(where, key, value)
     end)
   end
+
+  def params_order(params) do
+    params
+    |> Enum.reduce([], fn
+      {field, sort}, order ->
+        Keyword.put(order, ensure_atom(sort), field)
+      field, order ->
+        Keyword.put(order, :asc, ensure_atom(field))
+    end)
+    |> Enum.reverse
+  end
+
+  defp ensure_atom(arg) when is_atom(arg), do: arg
+  defp ensure_atom(arg) when is_binary(arg), do: String.to_atom(arg)
 
 end

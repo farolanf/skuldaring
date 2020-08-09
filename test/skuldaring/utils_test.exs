@@ -1,7 +1,7 @@
 defmodule Skuldaring.UtilsTest do
   use Skuldaring.DataCase, async: true
 
-  import Skuldaring.Utils
+  alias Skuldaring.Utils
 
   describe "utils" do
 
@@ -12,12 +12,18 @@ defmodule Skuldaring.UtilsTest do
         {"/sekolah", "Sekolah"},
         {"/sekolah/[^/]+/murid", "Murid Sekolah"},
       ]
-      breadcrumbs = get_breadcrumbs("/sekolah/rahayu/murid", paths)
+      breadcrumbs = Utils.get_breadcrumbs("/sekolah/rahayu/murid", paths)
       assert ^breadcrumbs = [
         {"/", "Beranda"},
         {"/sekolah", "Sekolah"},
         "Murid Sekolah",
       ]
+    end
+
+    test "params_order/1" do
+      order = ["name", age: :desc]
+      result = Utils.params_order(order)
+      assert [asc: :name, desc: :age] = result
     end
 
   end
