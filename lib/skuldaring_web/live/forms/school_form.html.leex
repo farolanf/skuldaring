@@ -1,0 +1,13 @@
+<% IO.inspect @school %>
+
+<h4><%= @title %></h4>
+
+<%= f = form_for @changeset, "#",
+  id: "post-form",
+  phx_target: @myself,
+  phx_submit: "save" %>
+
+  <%= text_input f, :name %>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

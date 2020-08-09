@@ -8,26 +8,36 @@ defmodule SkuldaringWeb.School.SchoolLive do
   alias Skuldaring.Schools
 
   @impl true
-  def mount(_params, %{"user_id" => user_id} = session, socket) do
-    Logger.debug "live session = #{inspect session}"
-
-    search_params = %{user_id: user_id}
-
+  def mount(_params, %{} = session, socket) do
     socket = socket
     |> handle_session(session)
-    |> assign(:schools, Schools.find_schools(search_params))
+
+    socket = case session do
+      %{"user_id" => user_id} ->
+        search_params = %{user_id: user_id}
+        socket
+        |> assign(:schools, Schools.find_schools(search_params))
+      _ -> socket
+    end
 
     {:ok, socket}
   end
 
   @impl true
-  def mount(_params, session, socket) do
-    Logger.debug "live session = #{inspect session}"
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
 
-    socket = socket
-    |> handle_session(session)
+  defp apply_action(socket, :index, _params) do
+    socket
+    |> assign(:page_title, "Daftar Sekolah")
+    |> assign(:school, nil)
+  end
 
-    {:ok, socket}
+  defp apply_action(socket, :edit, %{"id" => id}) do
+    socket
+    |> assign(:page_title, "Ubah Sekolah")
+    |> assign(:school, Schools.get_school!(id))
   end
 
 end
