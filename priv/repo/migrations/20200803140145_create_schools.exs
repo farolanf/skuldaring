@@ -5,6 +5,8 @@ defmodule Skuldaring.Repo.Migrations.CreateSchools do
     create table(:schools) do
       add :name, :string, null: false
       add :active, :boolean, null: false, default: false
+      add :confirmed, :boolean, null: false, default: false
+
       add :user_id, references(:users, on_delete: :nothing), null: false
 
       timestamps()

@@ -8,6 +8,7 @@ defmodule Skuldaring.Schools.School do
   schema "schools" do
     field :name, :string
     field :active, :boolean
+    field :confirmed, :boolean
 
     belongs_to :user, User
     has_many :rooms, Room
