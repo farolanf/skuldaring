@@ -31,7 +31,7 @@ defmodule SkuldaringWeb.Router do
   end
 
   scope "/sekolah", SkuldaringWeb.School, as: :school do
-    pipe_through :browser
+    pipe_through [:browser, :authenticated_check]
 
     live "/", SchoolLive, :index
     live "/new", SchoolLive, :new
@@ -41,14 +41,32 @@ defmodule SkuldaringWeb.Router do
   end
 
   scope "/admin", SkuldaringWeb.Admin, as: :admin do
-    pipe_through [:browser, :authorize_check, :admin]
+    pipe_through [:browser, :admin_check, :admin]
 
     get "/", AdminController, :index
 
     resources "/schools", SchoolController
   end
 
-  def authorize_check(conn, _opts) do
+  def authenticated_check(conn, _opts) do
+    case get_session(conn) do
+      %{"user_id" => user_id} ->
+        with user when not is_nil(user) <- Repo.get(User, user_id)
+        do
+          conn
+        else
+          _ -> conn
+            |> delete_session(:user_id)
+            |> put_flash(:error, "Silahkan masuk terlebih dahulu")
+            |> redirect(to: "/")
+        end
+      _ -> conn
+        |> put_flash(:error, "Silahkan masuk terlebih dahulu")
+        |> redirect(to: "/")
+    end
+  end
+
+  def admin_check(conn, _opts) do
     case get_session(conn) do
       %{"user_id" => user_id} ->
         with user when not is_nil(user) <- Repo.get(User, user_id),
@@ -57,10 +75,12 @@ defmodule SkuldaringWeb.Router do
           conn
         else
           _ -> conn
-            |> put_flash(:error, "Unauthorized")
+            |> put_flash(:error, "Akses terbatas")
             |> redirect(to: "/")
         end
       _ -> conn
+        |> put_flash(:error, "Silahkan masuk terlebih dahulu")
+        |> redirect(to: "/")
     end
   end
 
