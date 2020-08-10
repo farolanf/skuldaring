@@ -21,6 +21,9 @@ defmodule SkuldaringWeb.SchoolForm do
 
   @impl true
   def handle_event("validate", %{"school" => params}, socket) do
+    params = params
+    |> Map.put("user_id", socket.assigns.user.id)
+
     changeset = socket.assigns.school
     |> Schools.change_school(params)
     |> Map.put(:action, :validate)
@@ -30,6 +33,9 @@ defmodule SkuldaringWeb.SchoolForm do
 
   @impl true
   def handle_event("save", %{"school" => params}, socket) do
+    params = params
+    |> Map.put("user_id", socket.assigns.user.id)
+
     socket = socket
     |> assign(touched: true)
 
@@ -40,7 +46,7 @@ defmodule SkuldaringWeb.SchoolForm do
     case Schools.create_school(params) do
       {:ok, _school} ->
         socket = socket
-        |> put_flash(:info, "School created successfully")
+        |> put_flash(:success, "Sukses membuat sekolah baru")
         |> push_redirect(to: socket.assigns.return_to)
 
         {:noreply, socket}
@@ -53,7 +59,7 @@ defmodule SkuldaringWeb.SchoolForm do
     case Schools.update_school(socket.assigns.school, params) do
       {:ok, _school} ->
         socket = socket
-        |> put_flash(:info, "School updated successfully")
+        |> put_flash(:success, "Sukses mengubah sekolah")
         |> push_redirect(to: socket.assigns.return_to)
 
         {:noreply, socket}
