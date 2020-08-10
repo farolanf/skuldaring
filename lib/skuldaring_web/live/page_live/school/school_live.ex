@@ -15,7 +15,7 @@ defmodule SkuldaringWeb.School.SchoolLive do
 
     socket = case session do
       %{"user_id" => user_id} ->
-        search_params = %{user_id: user_id}
+        search_params = %{where: %{user_id: user_id}}
         socket
         |> assign(:schools, Schools.find_schools(search_params))
       _ -> socket

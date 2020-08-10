@@ -2,6 +2,7 @@ defmodule SkuldaringWeb.SchoolForm do
   use SkuldaringWeb, :live_component
 
   alias Skuldaring.Schools
+  alias Skuldaring.Permissions
 
   @impl true
   def mount(socket) do
@@ -43,28 +44,36 @@ defmodule SkuldaringWeb.SchoolForm do
   end
 
   defp save_post(socket, :new, params) do
-    case Schools.create_school(params) do
-      {:ok, _school} ->
-        socket = socket
-        |> put_flash(:success, "Sukses membuat sekolah baru")
-        |> push_redirect(to: socket.assigns.return_to)
+    if !Permissions.allow?(socket.assigns.user, "school", "create") do
+      handle_access_denied(socket)
+    else
+      case Schools.create_school(params) do
+        {:ok, _school} ->
+          socket = socket
+          |> put_flash(:success, "Sukses membuat sekolah baru")
+          |> push_redirect(to: socket.assigns.return_to)
 
-        {:noreply, socket}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+          {:noreply, socket}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
     end
   end
 
   defp save_post(socket, :edit, params) do
-    case Schools.update_school(socket.assigns.school, params) do
-      {:ok, _school} ->
-        socket = socket
-        |> put_flash(:success, "Sukses mengubah sekolah")
-        |> push_redirect(to: socket.assigns.return_to)
+    if !Permissions.allow?(socket.assigns.user, socket.assigns.school, "change") do
+      handle_access_denied(socket)
+    else
+      case Schools.update_school(socket.assigns.school, params) do
+        {:ok, _school} ->
+          socket = socket
+          |> put_flash(:success, "Sukses mengubah sekolah")
+          |> push_redirect(to: socket.assigns.return_to)
 
-        {:noreply, socket}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+          {:noreply, socket}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
     end
   end
 

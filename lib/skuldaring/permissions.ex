@@ -13,6 +13,14 @@ defmodule Skuldaring.Permissions do
 
   @name :permissions
 
+  def allow!(obj, %User{} = sub, act) do
+    if GenServer.call(@name, {:allow?, sub, obj, act}) do
+      obj
+    else
+      raise AccessDenied
+    end
+  end
+
   def allow?(sub, obj, act) do
     GenServer.call(@name, {:allow?, sub, obj, act})
   end
@@ -57,28 +65,35 @@ defmodule Skuldaring.Permissions do
   end
 
   def allow?(%__MODULE__{enforcer: enforcer}, roles, obj, act)
-      when is_binary(roles)
-      when is_binary(obj) do
+      when is_binary(roles) and is_binary(obj) do
     Enforcer.allow?(enforcer, [roles, obj, act])
   end
 
-  def allow?(%__MODULE__{} = struct, %User{} = user, %_obj_name{} = obj, act) do
-    add_owner = fn roles ->
-      user_id = user.id
-      case obj do
-        %{user_id: ^user_id} -> ["owner" | roles]
-        _ -> roles
-      end
-    end
-
+  def allow?(%__MODULE__{} = struct, %User{} = user, obj, act)
+      when is_binary(obj) do
     roles = ["guest"]
-    |> add_owner.()
+    |> Enum.concat(user.roles)
+    |> Enum.join(",")
+
+    allow?(struct, roles, obj, act)
+  end
+
+  def allow?(%__MODULE__{} = struct, %User{} = user, %_obj_name{} = obj, act) do
+    roles = ["guest"]
+    |> add_owner(user.id, obj)
     |> Enum.concat(user.roles)
     |> Enum.join(",")
 
     obj_type = get_obj_type(obj)
 
     allow?(struct, roles, obj_type, act)
+  end
+
+  defp add_owner(roles, user_id, %_name{} = obj) do
+    case obj do
+      %{user_id: ^user_id} -> ["owner" | roles]
+      _ -> roles
+    end
   end
 
   defp get_obj_type(%obj_name{}) do

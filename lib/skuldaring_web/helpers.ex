@@ -1,7 +1,7 @@
 defmodule SkuldaringWeb.Helpers do
-
   import Phoenix.LiveView
 
+  alias Phoenix.LiveView.Socket
   alias Skuldaring.Repo
   alias Skuldaring.Accounts.User
 
@@ -13,6 +13,12 @@ defmodule SkuldaringWeb.Helpers do
     else
       _ -> socket
     end
+  end
+
+  def handle_access_denied(%Socket{} = socket) do
+    {:noreply, socket
+    |> put_flash(:error, "Akses ditolak")
+    |> push_redirect(to: "/")}
   end
 
 end

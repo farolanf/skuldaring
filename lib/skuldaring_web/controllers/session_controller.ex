@@ -23,6 +23,7 @@ defmodule SkuldaringWeb.SessionController do
           username: claims["preferred_username"],
           first_name: claims["given_name"],
           last_name: claims["family_name"],
+          roles: ["user"]
         }
 
         {:ok, user} = Accounts.create_user(user_params)
