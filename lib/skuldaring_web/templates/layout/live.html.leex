@@ -7,6 +7,12 @@
       phx-value-key="info"><%= live_flash(@flash, :info) %></div>
   <% end %>
 
+  <%= if live_flash(@flash, :success) do %>
+    <div class="callout success" role="alert"
+      phx-click="lv:clear-flash"
+      phx-value-key="info"><%= live_flash(@flash, :success) %></div>
+  <% end %>
+
   <%= if live_flash(@flash, :error) do %>
     <div class="callout alert" role="alert">
       <%= live_flash(@flash, :error) %>
