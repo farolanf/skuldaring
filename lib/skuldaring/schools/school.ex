@@ -18,9 +18,10 @@ defmodule Skuldaring.Schools.School do
   end
 
   @doc false
-  def changeset(school, attrs) do
+  def changeset(school, attrs, changes \\ %{}) do
     school
     |> cast(attrs, [:name, :user_id])
+    |> change(changes)
     |> validate_required([:name, :user_id])
     |> foreign_key_constraint(:user_id)
   end

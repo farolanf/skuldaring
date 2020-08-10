@@ -22,11 +22,8 @@ defmodule SkuldaringWeb.SchoolForm do
 
   @impl true
   def handle_event("validate", %{"school" => params}, socket) do
-    params = params
-    |> Map.put("user_id", socket.assigns.user.id)
-
     changeset = socket.assigns.school
-    |> Schools.change_school(params)
+    |> Schools.change_school(params, %{user_id: socket.assigns.user.id})
     |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, changeset: changeset, touched: true)}
@@ -34,9 +31,6 @@ defmodule SkuldaringWeb.SchoolForm do
 
   @impl true
   def handle_event("save", %{"school" => params}, socket) do
-    params = params
-    |> Map.put("user_id", socket.assigns.user.id)
-
     socket = socket
     |> assign(touched: true)
 
@@ -47,7 +41,7 @@ defmodule SkuldaringWeb.SchoolForm do
     if !Permissions.allow?(socket.assigns.user, "school", "create") do
       handle_access_denied(socket)
     else
-      case Schools.create_school(params) do
+      case Schools.create_school(params, %{user_id: socket.assigns.user.id}) do
         {:ok, _school} ->
           socket = socket
           |> put_flash(:success, "Sukses membuat sekolah baru")
@@ -64,7 +58,8 @@ defmodule SkuldaringWeb.SchoolForm do
     if !Permissions.allow?(socket.assigns.user, socket.assigns.school, "change") do
       handle_access_denied(socket)
     else
-      case Schools.update_school(socket.assigns.school, params) do
+      changes = %{user_id: socket.assigns.user.id}
+      case Schools.update_school(socket.assigns.school, params, changes) do
         {:ok, _school} ->
           socket = socket
           |> put_flash(:success, "Sukses mengubah sekolah")

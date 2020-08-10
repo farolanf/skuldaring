@@ -58,9 +58,9 @@ defmodule Skuldaring.Schools do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_school(attrs \\ %{}) do
+  def create_school(attrs, changes) do
     %School{}
-    |> School.changeset(attrs)
+    |> School.changeset(attrs, changes)
     |> Repo.insert()
   end
 
@@ -76,9 +76,9 @@ defmodule Skuldaring.Schools do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_school(%School{} = school, attrs) do
+  def update_school(%School{} = school, attrs, changes) do
     school
-    |> School.changeset(attrs)
+    |> School.changeset(attrs, changes)
     |> Repo.update()
   end
 
@@ -107,8 +107,8 @@ defmodule Skuldaring.Schools do
       %Ecto.Changeset{data: %School{}}
 
   """
-  def change_school(%School{} = school, attrs \\ %{}) do
-    School.changeset(school, attrs)
+  def change_school(%School{} = school, attrs \\ %{}, changes \\ %{}) do
+    School.changeset(school, attrs, changes)
   end
 
   alias Skuldaring.Schools.Room
