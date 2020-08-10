@@ -9,9 +9,12 @@ defmodule SkuldaringWeb.SessionController do
     with {:ok, tokens} <- OpenIDConnect.fetch_tokens(:skuldaring, params),
       {:ok, user} <- Accounts.verify_token(tokens["id_token"])
     do
+      redirect_uri = (get_session(conn, :redirect_url) || "/") |> URI.parse()
+
       conn
       |> put_session(:user_id, user.id)
-      |> redirect(to: "/")
+      |> delete_session(:redirect_url)
+      |> redirect(to: redirect_uri.path)
     else
       {:error, :invalid_user, claims} ->
         user_params = %{
