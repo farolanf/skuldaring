@@ -49,18 +49,14 @@ defmodule SkuldaringWeb.Router do
   end
 
   def authenticated_check(conn, _opts) do
-    case get_session(conn) do
-      %{"user_id" => user_id} ->
-        with user when not is_nil(user) <- Repo.get(User, user_id)
-        do
-          conn
-        else
-          _ -> conn
-            |> delete_session(:user_id)
-            |> put_flash(:error, "Silahkan masuk terlebih dahulu")
-            |> redirect(to: "/")
-        end
+    with %{"user_id" => user_id} <- get_session(conn),
+      user when not is_nil(user) <- Repo.get(User, user_id)
+    do
+      conn
+    else
       _ -> conn
+        |> delete_session(:user_id)
+        |> put_session(:redirect_url, request_url(conn))
         |> put_flash(:error, "Silahkan masuk terlebih dahulu")
         |> redirect(to: "/")
     end
