@@ -4,6 +4,7 @@ defmodule SkuldaringWeb.School.SchoolLive do
   require Logger
 
   import SkuldaringWeb.Helpers
+  import Skuldaring.Permissions
 
   alias Skuldaring.Schools
   alias Skuldaring.Schools.School
@@ -45,6 +46,39 @@ defmodule SkuldaringWeb.School.SchoolLive do
     socket
     |> assign(:page_title, "Ubah Sekolah")
     |> assign(:school, Schools.get_school!(id))
+  end
+
+  @impl true
+  def handle_event(event, params, socket) do
+    {:noreply, apply_event(event, params, socket)}
+  end
+
+  def apply_event("activate", %{"id" => id}, socket) do
+    with %{user: user} <- socket.assigns,
+      school <- Schools.get_school!(id),
+      true <- allow?(user, school, "change"),
+      {:ok, _school} <- Schools.update_school(school, %{active: true}, %{})
+    do
+      socket
+        |> put_flash(:success, "Sukses mengaktifkan sekolah")
+    else
+      _ -> socket
+        |> put_flash(:error, "Gagal mengaktifkan sekolah")
+    end
+  end
+
+  def apply_event("deactivate", %{"id" => id}, socket) do
+    with %{user: user} <- socket.assigns,
+      school <- Schools.get_school!(id),
+      true <- allow?(user, school, "change"),
+      {:ok, _school} <- Schools.update_school(school, %{active: false}, %{})
+    do
+      socket
+        |> put_flash(:success, "Sukses menon-aktifkan sekolah")
+    else
+      _ -> socket
+        |> put_flash(:error, "Gagal menon-aktifkan sekolah")
+    end
   end
 
 end

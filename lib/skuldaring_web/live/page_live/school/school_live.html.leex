@@ -7,12 +7,12 @@
         <tr>
           <th>Nama Sekolah</th>
           <th>
-            Status
-            <span data-tooltip phx-hook="foundation" title="Buatlah ruangan dan atur akses sebelum mengaktifkan sekolah">?</span>
+            Aktif
+            <span data-tooltip phx-hook="foundation" title="Sekolah yang tidak aktif hanya dapat diakses oleh pemilik">?</span>
           </th>
           <th>
             Konfirmasi
-            <span data-tooltip phx-hook="foundation" title="Sekolah perlu konfirmasi admin sebelum dapat digunakan">?</span>
+            <span data-tooltip phx-hook="foundation" title="Sekolah perlu dikonfirmasi oleh admin sebelum dapat digunakan">?</span>
           </th>
           <th></th>
         </tr>
@@ -22,14 +22,20 @@
           <tr>
             <td><%= live_patch school.name, to: Routes.school_school_front_path(@socket, :index, school.id) %></td>
             <td>
-              <%= if school.active do "Aktif" else "Belum aktif" end %>
+              <%= if school.active, do: "Aktif", else: "Belum aktif" %>
             </td>
             <td>
-              <%= if school.confirmed do "Terkonfirmasi" else "Belum dikonfirmasi" end %>
+              <%= if school.confirmed, do: "Terkonfirmasi", else: "Belum dikonfirmasi" %>
             </td>
             <td>
               <ul class="menu">
                 <li><%= live_patch "Ubah", to: Routes.school_school_path(@socket, :edit, school) %></li>
+                <%= if !school.active do %>
+                  <li><%= link "Aktifkan", to: "#", phx_click: "activate", phx_value_id: school.id %></li>
+                <% end %>
+                <%= if school.active do %>
+                  <li><%= link "Non aktifkan", to: "#", phx_click: "deactivate", phx_value_id: school.id %></li>
+                <% end %>
               </ul>
             </td>
           </tr>
