@@ -20,7 +20,7 @@
       <tbody>
         <%= for school <- @schools do %>
           <tr>
-            <td><%= live_patch school.name, to: Routes.school_front_path(@socket, :index, school.id) %></td>
+            <td><%= live_patch school.name, to: Routes.school_show_path(@socket, :index, school.id) %></td>
             <td>
               <%= if school.active, do: "Aktif", else: "Belum aktif" %>
             </td>
@@ -29,7 +29,7 @@
             </td>
             <td>
               <ul class="menu">
-                <li><%= live_patch "Ubah", to: Routes.school_index_path(@socket, :edit, school) %></li>
+                <li><%= live_patch "Ubah", to: Routes.school_edit_path(@socket, :index, school.id) %></li>
                 <%= if !school.active do %>
                   <li><%= link "Aktifkan", to: "#", phx_click: "activate", phx_value_id: school.id %></li>
                 <% end %>
@@ -48,15 +48,4 @@
     </div>
   <% end %>
   <%= live_patch "Sekolah Baru", to: Routes.school_index_path(@socket, :new) %>
-<% end %>
-
-<%= if @live_action in [:new, :edit] do %>
-  <%= live_modal @socket, :form_modal, SkuldaringWeb.SchoolForm,
-    id: @school.id || :new,
-    title: @page_title,
-    action: @live_action,
-    school: @school,
-    user: @user,
-    return_to: Routes.school_index_path(@socket, :index)
-  %>
 <% end %>

@@ -35,9 +35,8 @@ defmodule SkuldaringWeb.Router do
 
     live "/", Index, :index
     live "/new", Index, :new
-    live "/:id/edit", Index, :edit
-
-    live "/:id", Front, :index
+    live "/:id/edit", Edit, :index
+    live "/:id", Show, :index
   end
 
   scope "/admin", SkuldaringWeb.Admin, as: :admin do

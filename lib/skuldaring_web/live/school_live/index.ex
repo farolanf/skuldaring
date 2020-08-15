@@ -46,12 +46,6 @@ defmodule SkuldaringWeb.SchoolLive.Index do
     |> assign(:school, %School{})
   end
 
-  defp apply_action(:edit, %{"id" => id}, socket) do
-    socket
-    |> assign(:page_title, "Ubah Sekolah")
-    |> assign(:school, Schools.get_school!(id))
-  end
-
   @impl true
   def handle_event(event, params, socket) do
     {:noreply, apply_event(event, params, socket)}
