@@ -41,7 +41,15 @@ defmodule SkuldaringWeb.Admin.SchoolController do
   def update(conn, %{"id" => id, "school" => school_params}) do
     school = Schools.get_school!(id)
 
-    case Schools.update_school(school, school_params) do
+    {user_id, _} = school_params["user_id"]
+    |> Integer.parse()
+
+    changes = %{
+      confirmed: String.to_existing_atom(school_params["confirmed"]),
+      user_id: user_id,
+    }
+
+    case Schools.update_school(school, school_params, changes) do
       {:ok, school} ->
         conn
         |> put_flash(:info, "School updated successfully.")
