@@ -15,4 +15,20 @@ defmodule SkuldaringWeb.SchoolLive.Edit do
     {:ok, socket}
   end
 
+  @impl true
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket.assigns.live_action, params, socket)}
+  end
+
+  defp apply_action(:index, _params, socket), do: socket
+
+  defp apply_action(:room_index, _params, socket) do
+    school = socket.assigns.school
+
+    rooms = Schools.find_rooms(%{where: %{school_id: school.id}})
+
+    socket
+    |> assign(:rooms, rooms)
+  end
+
 end

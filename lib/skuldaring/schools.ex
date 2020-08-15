@@ -113,6 +113,12 @@ defmodule Skuldaring.Schools do
 
   alias Skuldaring.Schools.Room
 
+  def find_rooms(%{} = params) do
+    Room
+    |> find_query(params)
+    |> list_rooms()
+  end
+
   @doc """
   Returns the list of rooms.
 
@@ -122,8 +128,9 @@ defmodule Skuldaring.Schools do
       [%Room{}, ...]
 
   """
-  def list_rooms do
-    Repo.all(Room)
+  def list_rooms(query \\ Room) do
+    query
+    |> Repo.all()
   end
 
   @doc """

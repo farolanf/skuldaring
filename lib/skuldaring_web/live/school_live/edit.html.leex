@@ -1,1 +1,14 @@
 <h1>Atur Sekolah</h1>
+
+<% IO.inspect assigns %>
+
+<ul>
+  <li><%= live_patch "Ruangan", to: Routes.school_edit_path(@socket, :room_index, @school.id) %></li>
+</ul>
+
+<%= if @live_action in [:room_index] do %>
+  <h2>Ruangan</h2>
+  <%= for room <- @rooms do %>
+    <%= room.name %>
+  <% end %>
+<% end %>
