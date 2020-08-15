@@ -18,11 +18,15 @@ defmodule SkuldaringWeb.School.SchoolLive do
       %{"user_id" => user_id} ->
         search_params = %{where: %{user_id: user_id}}
         socket
-        |> assign(:schools, Schools.find_schools(search_params))
+        |> assign(:schools, fetch_schools(search_params))
       _ -> socket
     end
 
     {:ok, socket}
+  end
+
+  defp fetch_schools(search_params) do
+    Schools.find_schools(search_params)
   end
 
   @impl true
@@ -61,6 +65,7 @@ defmodule SkuldaringWeb.School.SchoolLive do
     do
       socket
         |> put_flash(:success, "Sukses mengaktifkan sekolah")
+        |> assign(:schools, fetch_schools(%{where: %{user_id: user.id}}))
     else
       _ -> socket
         |> put_flash(:error, "Gagal mengaktifkan sekolah")
@@ -75,6 +80,7 @@ defmodule SkuldaringWeb.School.SchoolLive do
     do
       socket
         |> put_flash(:success, "Sukses menon-aktifkan sekolah")
+        |> assign(:schools, fetch_schools(%{where: %{user_id: user.id}}))
     else
       _ -> socket
         |> put_flash(:error, "Gagal menon-aktifkan sekolah")
