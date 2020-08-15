@@ -2,15 +2,27 @@
 <%= live_component @socket, SkuldaringWeb.NavLive.BreadcrumbsLive, Map.merge(assigns, %{id: "breadcrumbs"}) %>
 <main role="main" class="padding-1">
   <%= if live_flash(@flash, :info) do %>
-    <div class="callout primary" role="alert"
-      phx-click="lv:clear-flash"
-      phx-value-key="info"><%= live_flash(@flash, :info) %></div>
+    <div class="callout primary" role="alert">
+      <%= live_flash(@flash, :info) %>
+      <button type="button" class="close-button" aria-label="Dismiss alert"
+        phx-click="lv:clear-flash"
+        phx-value-key="info"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   <% end %>
 
   <%= if live_flash(@flash, :success) do %>
-    <div class="callout success" role="alert"
-      phx-click="lv:clear-flash"
-      phx-value-key="info"><%= live_flash(@flash, :success) %></div>
+    <div class="callout success" role="alert">
+      <%= live_flash(@flash, :success) %>
+      <button type="button" class="close-button" aria-label="Dismiss alert"
+        phx-click="lv:clear-flash"
+        phx-value-key="success"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   <% end %>
 
   <%= if live_flash(@flash, :error) do %>
