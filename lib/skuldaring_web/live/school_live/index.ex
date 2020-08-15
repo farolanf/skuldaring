@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.School.SchoolLive do
+defmodule SkuldaringWeb.SchoolLive.Index do
   use SkuldaringWeb, :live_view
 
   require Logger

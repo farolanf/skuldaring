@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.School.SchoolFrontLive do
+defmodule SkuldaringWeb.SchoolLive.Front do
   use SkuldaringWeb, :live_view
 
   import SkuldaringWeb.Helpers

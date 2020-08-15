@@ -30,14 +30,14 @@ defmodule SkuldaringWeb.Router do
     live "/", FrontLive, :index
   end
 
-  scope "/sekolah", SkuldaringWeb.School, as: :school do
+  scope "/sekolah", SkuldaringWeb.SchoolLive do
     pipe_through [:browser, :authenticated_check]
 
-    live "/", SchoolLive, :index
-    live "/new", SchoolLive, :new
-    live "/:id/edit", SchoolLive, :edit
+    live "/", Index, :index
+    live "/new", Index, :new
+    live "/:id/edit", Index, :edit
 
-    live "/:id", SchoolFrontLive, :index
+    live "/:id", Front, :index
   end
 
   scope "/admin", SkuldaringWeb.Admin, as: :admin do
