@@ -49,3 +49,14 @@
   <% end %>
   <%= live_patch "Sekolah Baru", to: Routes.school_index_path(@socket, :new) %>
 <% end %>
+
+<%= if @live_action in [:new] do %>
+  <%= live_modal @socket, :form_modal, SkuldaringWeb.SchoolLive.NewForm,
+    id: @school.id || :new,
+    title: @page_title,
+    action: @live_action,
+    school: @school,
+    user: @user,
+    return_to: Routes.school_index_path(@socket, :index)
+  %>
+<% end %>

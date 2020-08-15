@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.SchoolForm do
+defmodule SkuldaringWeb.SchoolLive.NewForm do
   use SkuldaringWeb, :live_component
 
   alias Skuldaring.Schools
