@@ -27,22 +27,22 @@ defmodule SkuldaringWeb.School.SchoolLive do
 
   @impl true
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+    {:noreply, apply_action(socket.assigns.live_action, params, socket)}
   end
 
-  defp apply_action(socket, :index, _params) do
+  defp apply_action(:index, _params, socket) do
     socket
     |> assign(:page_title, "Daftar Sekolah")
     |> assign(:school, nil)
   end
 
-  defp apply_action(socket, :new, _params) do
+  defp apply_action(:new, _params, socket) do
     socket
     |> assign(:page_title, "Sekolah Baru")
     |> assign(:school, %School{})
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
+  defp apply_action(:edit, %{"id" => id}, socket) do
     socket
     |> assign(:page_title, "Ubah Sekolah")
     |> assign(:school, Schools.get_school!(id))
