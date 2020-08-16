@@ -12,20 +12,15 @@ defmodule SkuldaringWeb.NavLive.BreadcrumbsLive do
   ]
 
   @impl true
-  def preload(assign_list) do
-    breadcrumbs = case assign_list do
-      [%{uri: %{path: path}}] -> get_breadcrumbs(path, @paths)
-      _ -> []
+  def update(assigns, socket) do
+    socket = case assigns do
+      %{uri: %{path: path}} ->
+        socket
+        |> assign(:path, get_breadcrumbs(path, @paths))
+      _ -> socket
     end
 
-    List.replace_at(
-      assign_list,
-      0,
-      Map.merge(
-        List.first(assign_list),
-        %{path: breadcrumbs}
-      )
-    )
+    {:ok, socket}
   end
 
  end
