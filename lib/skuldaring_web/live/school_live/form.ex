@@ -1,8 +1,9 @@
 defmodule SkuldaringWeb.SchoolLive.Form do
   use SkuldaringWeb, :live_component
 
+  import Skuldaring.Permissions
+
   alias Skuldaring.Schools
-  alias Skuldaring.Permissions
 
   @impl true
   def mount(socket) do
@@ -34,39 +35,37 @@ defmodule SkuldaringWeb.SchoolLive.Form do
     socket = socket
     |> assign(touched: true)
 
-    save_post(socket, socket.assigns.action, params)
+    {:noreply, save_post(socket, socket.assigns.action, params)}
   end
 
   defp save_post(socket, :new, params) do
-    if !Permissions.allow?(socket.assigns.user, "school", "create") do
+    if !allow?(socket.assigns.user, "school", "create") do
       handle_access_denied(socket)
     else
       case Schools.create_school(params, %{user_id: socket.assigns.user.id}) do
         {:ok, _school} ->
-          socket = socket
+          socket
           |> put_flash(:success, "Sukses membuat sekolah baru")
           |> push_redirect(to: socket.assigns.return_to)
-
-          {:noreply, socket}
         {:error, %Ecto.Changeset{} = changeset} ->
-          {:noreply, assign(socket, changeset: changeset)}
+          socket
+          |> assign(changeset: changeset)
       end
     end
   end
 
   defp save_post(socket, :edit, params) do
-    if !Permissions.allow?(socket.assigns.user, socket.assigns.school, "change") do
+    if !allow?(socket.assigns.user, socket.assigns.school, "change") do
       handle_access_denied(socket)
     else
       changes = %{user_id: socket.assigns.user.id}
       case Schools.update_school(socket.assigns.school, params, changes) do
         {:ok, _school} ->
-          socket = socket
+          socket
           |> put_flash(:success, "Sukses mengubah sekolah")
-
-          {:noreply, socket}
         {:error, %Ecto.Changeset{} = changeset} ->
-          {:noreply, assign(socket, changeset: changeset)}
+          socket
+          |> assign(changeset: changeset)
       end
     end
   end
