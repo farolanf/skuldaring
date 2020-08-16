@@ -4,16 +4,10 @@ defmodule Skuldaring.Schools do
   """
 
   import Ecto.Query, warn: false
-  import Skuldaring.Utils
 
+  alias Skuldaring.Utils
   alias Skuldaring.Repo
   alias Skuldaring.Schools.School
-
-  def find_schools(%{} = params) do
-    School
-    |> find_query(params)
-    |> list_schools()
-  end
 
   @doc """
   Returns the list of schools.
@@ -24,10 +18,11 @@ defmodule Skuldaring.Schools do
       [%School{}, ...]
 
   """
-  def list_schools(query \\ School) do
-    query
+  def list_schools(%{} = params \\ %{}) do
+    School
+    |> Utils.find_query(params)
     |> Repo.all()
-    |> Repo.preload([:user])
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -113,12 +108,6 @@ defmodule Skuldaring.Schools do
 
   alias Skuldaring.Schools.Room
 
-  def find_rooms(%{} = params) do
-    Room
-    |> find_query(params)
-    |> list_rooms()
-  end
-
   @doc """
   Returns the list of rooms.
 
@@ -128,9 +117,11 @@ defmodule Skuldaring.Schools do
       [%Room{}, ...]
 
   """
-  def list_rooms(query \\ Room) do
-    query
+  def list_rooms(%{} = params \\ %{}) do
+    Room
+    |> Utils.find_query(params)
     |> Repo.all()
+    |> Repo.preload([:school, :user])
   end
 
   @doc """
@@ -161,9 +152,9 @@ defmodule Skuldaring.Schools do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_room(attrs \\ %{}) do
+  def create_room(attrs, changes) do
     %Room{}
-    |> Room.changeset(attrs)
+    |> Room.changeset(attrs, changes)
     |> Repo.insert()
   end
 
@@ -210,8 +201,8 @@ defmodule Skuldaring.Schools do
       %Ecto.Changeset{data: %Room{}}
 
   """
-  def change_room(%Room{} = room, attrs \\ %{}) do
-    Room.changeset(room, attrs)
+  def change_room(%Room{} = room, attrs \\ %{}, changes \\ %{}) do
+    Room.changeset(room, attrs, changes)
   end
 
   alias Skuldaring.Schools.SchoolRole

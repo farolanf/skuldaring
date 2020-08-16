@@ -26,7 +26,7 @@ defmodule SkuldaringWeb.SchoolLive.Index do
   end
 
   defp fetch_schools(search_params) do
-    Schools.find_schools(search_params)
+    Schools.list_schools(search_params)
   end
 
   @impl true

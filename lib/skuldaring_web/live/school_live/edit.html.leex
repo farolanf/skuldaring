@@ -1,5 +1,7 @@
 <h1>Atur Sekolah</h1>
 
+<% IO.inspect assigns[:new_room_modal], label: "modal" %>
+
 <ul class="menu">
   <li class="<%= if @live_action == :index, do: "is-active", else: "" %>"><%= live_patch "Umum", to: Routes.school_edit_path(@socket, :index, @school.id) %></li>
   <li class="<%= if @live_action in [:room_index, :room_edit], do: "is-active", else: "" %>"><%= live_patch "Ruangan", to: Routes.school_edit_path(@socket, :room_index, @school.id) %></li>
@@ -15,9 +17,37 @@
   end %>
 
   <%= if @live_action in [:room_index] do %>
-    room
-    <%= for room <- @rooms do %>
-      <%= room.name %>
+    <%= if assigns[:rooms] && length(@rooms) > 0 do %>
+      <%= for room <- @rooms do %>
+        <%= room.name %>
+      <% end %>
+    <% else %>
+      <div class="callout primary">
+        Belum ada ruangan, silahkan membuat ruangan baru
+      </div>
     <% end %>
+
+    <%= content_tag :button, "Ruangan Baru", class: "button", phx_click: "open", phx_value_new_room_modal: "true" %>
+
+    <%= if assigns[:new_room_modal] do %>
+      <div class="reveal-overlay" style="display: block"
+        phx-value-new-room-modal="false"
+        phx-capture-click="open"
+        phx-window-keydown="open"
+        phx-key="escape"
+        phx-page-loading
+      >
+        <div id="new-room-modal" class="reveal" style="display: block">
+          <%= live_component @socket, SkuldaringWeb.SchoolLive.RoomForm,
+            id: :new,
+            title: "Ruangan Baru",
+            action: :new,
+            room: %Skuldaring.Schools.Room{},
+            school: @school,
+            user: @user %>
+        </div>
+      </div>
+    <% end %>
+
   <% end %>
 </div>

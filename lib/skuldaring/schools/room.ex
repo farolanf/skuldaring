@@ -15,9 +15,10 @@ defmodule Skuldaring.Schools.Room do
   end
 
   @doc false
-  def changeset(room, attrs) do
+  def changeset(room, attrs, changes \\ %{}) do
     room
-    |> cast(attrs, [:name, :school_id, :user_id])
+    |> cast(attrs, [:name])
+    |> change(changes)
     |> validate_required([:name, :school_id, :user_id])
     |> foreign_key_constraint(:school_id)
     |> foreign_key_constraint(:user_id)
