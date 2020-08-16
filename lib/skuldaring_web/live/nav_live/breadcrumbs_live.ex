@@ -8,7 +8,7 @@ defmodule SkuldaringWeb.NavLive.BreadcrumbsLive do
     {"/", "Beranda"},
     {"/akun", "Akun"},
     {"/sekolah", "Sekolah"},
-    {"/[^/]+/murid", "Murid"},
+    {"/sekolah/[^/]+/edit", "Atur Sekolah"},
   ]
 
   @impl true

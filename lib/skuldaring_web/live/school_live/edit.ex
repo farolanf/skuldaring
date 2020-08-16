@@ -16,7 +16,10 @@ defmodule SkuldaringWeb.SchoolLive.Edit do
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
+  def handle_params(params, uri, socket) do
+    socket = socket
+    |> assign(:uri, URI.parse(uri))
+
     {:noreply, apply_action(socket.assigns.live_action, params, socket)}
   end
 
