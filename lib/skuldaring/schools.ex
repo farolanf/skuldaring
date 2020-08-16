@@ -170,9 +170,9 @@ defmodule Skuldaring.Schools do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_room(%Room{} = room, attrs) do
+  def update_room(%Room{} = room, attrs, changes) do
     room
-    |> Room.changeset(attrs)
+    |> Room.changeset(attrs, changes)
     |> Repo.update()
   end
 
