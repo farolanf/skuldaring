@@ -1,7 +1,6 @@
-<% IO.inspect assigns[:flash] %>
-
 <%= live_component @socket, SkuldaringWeb.NavLive.TopbarLive, Map.merge(assigns, %{id: "topbar"}) %>
 <%= live_component @socket, SkuldaringWeb.NavLive.BreadcrumbsLive, Map.merge(assigns, %{id: "breadcrumbs"}) %>
+
 <main role="main" class="padding-1">
   <%= if live_flash(@flash, :info) do %>
     <div class="callout primary" role="alert">
