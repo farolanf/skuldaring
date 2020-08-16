@@ -13,14 +13,6 @@ defmodule Skuldaring.Permissions do
 
   @name :permissions
 
-  def allow!(obj, %User{} = sub, act) do
-    if GenServer.call(@name, {:allow?, sub, obj, act}) do
-      obj
-    else
-      raise AccessDenied
-    end
-  end
-
   def allow?(sub, obj, act) do
     GenServer.call(@name, {:allow?, sub, obj, act})
   end
