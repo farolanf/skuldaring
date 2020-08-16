@@ -17,4 +17,12 @@ defmodule SkuldaringWeb.SchoolLive.Show do
     {:ok, socket}
   end
 
+  @impl true
+  def handle_params(_params, uri, socket) do
+    socket = socket
+    |> assign(:uri, URI.parse(uri))
+
+    {:noreply, socket}
+  end
+
 end

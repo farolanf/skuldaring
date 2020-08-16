@@ -28,6 +28,7 @@ defmodule SkuldaringWeb.Router do
     get "/logout", SessionController, :logout
 
     live "/", FrontLive.Index, :index
+    live "/beranda-sekolah/:id", SchoolLive.Show, :index
   end
 
   scope "/sekolah", SkuldaringWeb.SchoolLive do
@@ -39,8 +40,6 @@ defmodule SkuldaringWeb.Router do
     live "/:id/edit", Edit, :index
     live "/:id/edit/room", Edit, :room_index
     live "/:id/edit/room/:room_id/edit", Edit, :room_edit
-
-    live "/:id", Show, :index
   end
 
   scope "/admin", SkuldaringWeb.Admin, as: :admin do
