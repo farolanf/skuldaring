@@ -7,7 +7,7 @@ defmodule Skuldaring.Schools do
 
   alias Skuldaring.Utils
   alias Skuldaring.Repo
-  alias Skuldaring.Schools.School
+  alias Skuldaring.Schools.{School, Room}
 
   @doc """
   Returns the list of schools.
@@ -39,7 +39,11 @@ defmodule Skuldaring.Schools do
       ** (Ecto.NoResultsError)
 
   """
-  def get_school!(id), do: School |> Repo.get!(id) |> Repo.preload(:user)
+  def get_school!(id) do
+    School
+    |> Repo.get!(id)
+    |> Repo.preload([:user, rooms: from(r in Room, order_by: r.name)])
+  end
 
   @doc """
   Creates a school.

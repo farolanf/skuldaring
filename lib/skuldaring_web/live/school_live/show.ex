@@ -6,25 +6,38 @@ defmodule SkuldaringWeb.SchoolLive.Show do
   alias Skuldaring.Schools
 
   @impl true
-  def mount(%{"slug" => slug}, %{} = session, socket) do
-    id = id_from_slug(slug)
-
-    school = Schools.get_school!(id)
-
+  def mount(_params, %{} = session, socket) do
     socket = socket
     |> handle_session(session)
-    |> assign(:school, school)
-    |> assign(:page_title, school.name)
 
     {:ok, socket}
   end
 
   @impl true
-  def handle_params(_params, uri, socket) do
+  def handle_params(params, uri, socket) do
     socket = socket
     |> assign(:uri, URI.parse(uri))
 
-    {:noreply, socket}
+    {:noreply, apply_params(params, socket)}
+  end
+
+  defp apply_params(%{"slug" => slug, "room_slug" => room_slug}, socket) do
+    id = id_from_slug(room_slug)
+
+    room = Schools.get_room!(id)
+
+    apply_params(%{"slug" => slug}, socket)
+    |> assign(:room, room)
+  end
+
+  defp apply_params(%{"slug" => slug}, socket) do
+    id = id_from_slug(slug)
+
+    school = Schools.get_school!(id)
+
+    socket
+    |> assign(:school, school)
+    |> assign(:page_title, school.name)
   end
 
 end

@@ -22,8 +22,8 @@ defmodule SkuldaringWeb.Helpers do
     |> push_redirect(to: "/")
   end
 
-  def school_visit_path(school) do
-    "/visit/#{to_kebab(school.name)}-#{school.id}"
+  def slug(obj) do
+    "#{to_kebab(obj.name)}-#{obj.id}"
   end
 
   def id_from_slug(slug) do

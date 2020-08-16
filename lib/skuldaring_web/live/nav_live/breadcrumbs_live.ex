@@ -11,6 +11,8 @@ defmodule SkuldaringWeb.NavLive.BreadcrumbsLive do
     {"/sekolah/*/edit", "Atur Sekolah"},
     {"/sekolah/*/edit/room", "Ruangan"},
     {"/sekolah/*/edit/room/*/edit", "Atur Ruangan"},
+    {"/visit/*", "Beranda Sekolah"},
+    {"/visit/*/room/*", "Ruangan"},
   ]
 
   @impl true

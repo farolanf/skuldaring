@@ -29,6 +29,7 @@ defmodule SkuldaringWeb.Router do
 
     live "/", FrontLive.Index, :index
     live "/visit/:slug", SchoolLive.Show, :index
+    live "/visit/:slug/room/:room_slug", SchoolLive.Show, :visit_room
   end
 
   scope "/sekolah", SkuldaringWeb.SchoolLive do

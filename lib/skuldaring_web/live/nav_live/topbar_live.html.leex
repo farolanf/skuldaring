@@ -9,7 +9,7 @@
           <a href="#">Sekolah</a>
           <ul class="menu vertical is-dropdown-submenu">
             <%= for school <- @user.schools do %>
-              <li><%= live_redirect school.name, to: school_visit_path(school) %></li>
+              <li><%= live_redirect school.name, to: Routes.school_show_path(@socket, :index, slug(school)) %></li>
             <% end %>
           </ul>
         </li>
