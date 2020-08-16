@@ -3,10 +3,11 @@ defmodule SkuldaringWeb.SchoolLive.Index do
 
   require Logger
 
+  import Ecto.Query
   import SkuldaringWeb.Helpers
   import Skuldaring.Permissions
 
-  alias Skuldaring.Schools
+  alias Skuldaring.{Repo, Schools}
   alias Skuldaring.Schools.School
 
   @impl true
@@ -50,6 +51,7 @@ defmodule SkuldaringWeb.SchoolLive.Index do
     do
       socket
         |> put_flash(:success, "Sukses mengaktifkan sekolah")
+        |> redirect(to: Routes.school_index_path(socket, :index))
     else
       _ -> socket
         |> put_flash(:error, "Gagal mengaktifkan sekolah")
@@ -64,6 +66,7 @@ defmodule SkuldaringWeb.SchoolLive.Index do
     do
       socket
         |> put_flash(:success, "Sukses menon-aktifkan sekolah")
+        |> redirect(to: Routes.school_index_path(socket, :index))
     else
       _ -> socket
         |> put_flash(:error, "Gagal menon-aktifkan sekolah")

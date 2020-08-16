@@ -1,9 +1,11 @@
 defmodule SkuldaringWeb.SchoolLive.Edit do
   use SkuldaringWeb, :live_view
 
+  import Ecto.Query
   import Skuldaring.Permissions
 
   alias Skuldaring.{Repo, Schools}
+  alias Schools.Room
 
   @impl true
   def mount(%{"id" => id}, %{} = session, socket) do
@@ -40,7 +42,7 @@ defmodule SkuldaringWeb.SchoolLive.Edit do
 
   defp apply_action(:room_index, _params, socket) do
     school = socket.assigns.school
-    |> Repo.preload(:rooms)
+    |> Repo.preload(rooms: from(r in Room, order_by: r.name))
 
     socket
     |> assign(school: school)

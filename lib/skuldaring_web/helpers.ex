@@ -1,8 +1,11 @@
 defmodule SkuldaringWeb.Helpers do
   import Phoenix.LiveView
 
+  import Ecto.Query
+
   alias Phoenix.LiveView.Socket
   alias Skuldaring.Repo
+  alias Skuldaring.Schools.School
   alias Skuldaring.Accounts.User
 
   def handle_session(socket, %{} = session) do
@@ -10,7 +13,7 @@ defmodule SkuldaringWeb.Helpers do
       user when not is_nil(user) <- Repo.get(User, user_id)
     do
       user = user
-      |> Repo.preload(:schools)
+      |> Repo.preload(schools: from(s in School, order_by: s.name))
       socket |> assign(:user, user)
     else
       _ -> socket

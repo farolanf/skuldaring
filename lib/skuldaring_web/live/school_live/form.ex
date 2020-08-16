@@ -63,6 +63,7 @@ defmodule SkuldaringWeb.SchoolLive.Form do
         {:ok, _school} ->
           socket
           |> put_flash(:success, "Sukses mengubah sekolah")
+          |> push_redirect(to: socket.assigns.return_to)
         {:error, %Ecto.Changeset{} = changeset} ->
           socket
           |> assign(changeset: changeset)

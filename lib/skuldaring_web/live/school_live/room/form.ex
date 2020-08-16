@@ -69,7 +69,7 @@ defmodule SkuldaringWeb.SchoolLive.Room.Form do
   end
 
   defp save(:edit, params, socket) do
-    %{user: user, school: school, room: room} = socket.assigns
+    %{user: user, school: school, room: room, return_to: return_to} = socket.assigns
 
     if !allow?(user, school, "change") || !allow?(user, room, "change") do
       handle_access_denied(socket)
@@ -79,10 +79,11 @@ defmodule SkuldaringWeb.SchoolLive.Room.Form do
         user_id: user.id,
       }
 
-      case Schools.update_school(school, params, changes) do
-        {:ok, _school} ->
+      case Schools.update_room(room, params, changes) do
+        {:ok, _room} ->
           socket
           |> put_flash(:success, "Sukses mengubah ruangan")
+          |> redirect(to: return_to)
         {:error, %Ecto.Changeset{} = changeset} ->
           socket
           |> assign(changeset: changeset)
