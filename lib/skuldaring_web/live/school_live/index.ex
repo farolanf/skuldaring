@@ -3,11 +3,10 @@ defmodule SkuldaringWeb.SchoolLive.Index do
 
   require Logger
 
-  import Ecto.Query
   import SkuldaringWeb.Helpers
   import Skuldaring.Permissions
 
-  alias Skuldaring.{Repo, Schools}
+  alias Skuldaring.Schools
   alias Skuldaring.Schools.School
 
   @impl true
