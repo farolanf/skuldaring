@@ -15,7 +15,7 @@ defmodule SkuldaringWeb.SchoolLive.Room.Form do
     changeset = Schools.change_room(room)
 
     socket = socket
-    |> assign(assigns)
+    |> assign(assigns |> Map.delete(:flash))
     |> assign(:changeset, changeset)
 
     {:ok, socket}

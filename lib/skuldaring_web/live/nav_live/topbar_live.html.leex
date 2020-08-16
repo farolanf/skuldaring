@@ -4,6 +4,16 @@
       <li>
         <%= live_patch "Skul Daring", to: "/", class: "menu-text" %>
       </li>
+      <%= if assigns[:user] do %>
+        <li class="is-dropdown-submenu-parent">
+          <a href="#">Sekolah</a>
+          <ul class="menu vertical is-dropdown-submenu">
+            <%= for school <- @user.schools do %>
+              <li><%= live_patch school.name, to: Routes.school_show_path(@socket, :index, school.id) %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
     </ul>
   </div>
   <div class="top-bar-right">

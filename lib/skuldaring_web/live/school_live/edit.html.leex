@@ -18,5 +18,9 @@
     live_component @socket, SkuldaringWeb.SchoolLive.Room.Index, Map.merge(assigns, %{id: @school.id}) %>
 
   <%= if @live_action == :room_edit, do:
-    live_component @socket, SkuldaringWeb.SchoolLive.Room.Edit, Map.merge(assigns, %{id: @school.id, action: :edit}) %>
+    live_component @socket, SkuldaringWeb.SchoolLive.Room.Form, Map.merge(assigns, %{
+      id: @room.id,
+      action: :edit,
+      title: @room.name
+    }) %>
 </div>

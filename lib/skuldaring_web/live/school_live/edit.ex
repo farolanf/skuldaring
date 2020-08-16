@@ -8,6 +8,7 @@ defmodule SkuldaringWeb.SchoolLive.Edit do
   @impl true
   def mount(%{"id" => id}, %{} = session, socket) do
     school = Schools.get_school!(id)
+    |> Repo.preload(:rooms)
 
     socket = socket
     |> handle_session(session)

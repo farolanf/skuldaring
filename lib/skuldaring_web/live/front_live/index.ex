@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.FrontLive do
+defmodule SkuldaringWeb.FrontLive.Index do
   use SkuldaringWeb, :live_view
 
   require Logger
@@ -7,8 +7,9 @@ defmodule SkuldaringWeb.FrontLive do
 
   @impl true
   def mount(_params, session, socket) do
-    Logger.debug "live session = #{inspect session}"
-    socket = handle_session(socket, session)
+    socket = socket
+    |> handle_session(session)
+
     {:ok, socket}
   end
 

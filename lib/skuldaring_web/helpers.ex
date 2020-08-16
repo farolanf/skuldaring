@@ -9,6 +9,8 @@ defmodule SkuldaringWeb.Helpers do
     with user_id when not is_nil(user_id) <- session["user_id"],
       user when not is_nil(user) <- Repo.get(User, user_id)
     do
+      user = user
+      |> Repo.preload(:schools)
       socket |> assign(:user, user)
     else
       _ -> socket

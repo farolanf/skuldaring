@@ -1,24 +1,26 @@
-<%= if assigns[:rooms] && length(@rooms) > 0 do %>
-  <table>
-    <thead>
-      <tr>
-        <th>Nama Ruangan</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= for room <- @rooms do %>
+<%= if assigns[:school] && length(@school.rooms) > 0 do %>
+  <div class="table-scroll">
+    <table>
+      <thead>
         <tr>
-          <td><%= room.name %></td>
-          <td>
-            <ul class="menu">
-              <li><%= live_patch "Atur", to: Routes.school_edit_path(@socket, :room_edit, @school.id, room.id) %></li>
-            </ul>
-          </td>
+          <th>Nama Ruangan</th>
+          <th></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <%= for room <- @school.rooms do %>
+          <tr>
+            <td><%= room.name %></td>
+            <td>
+              <ul class="menu">
+                <li><%= live_patch "Atur", to: Routes.school_edit_path(@socket, :room_edit, @school.id, room.id) %></li>
+              </ul>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% else %>
   <div class="callout primary">
     Belum ada ruangan, silahkan membuat ruangan baru

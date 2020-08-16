@@ -1,47 +1,49 @@
 <h1>Sekolah</h1>
 
-<%= if assigns[:schools] do %>
-  <%= if length(@schools) > 0 do %>
-    <table>
-      <thead>
-        <tr>
-          <th>Nama Sekolah</th>
-          <th>
-            Aktif
-            <span data-tooltip phx-hook="foundation" title="Sekolah yang tidak aktif hanya dapat diakses oleh pemilik">?</span>
-          </th>
-          <th>
-            Konfirmasi
-            <span data-tooltip phx-hook="foundation" title="Sekolah perlu dikonfirmasi oleh admin sebelum dapat digunakan">?</span>
-          </th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= for school <- @schools do %>
+<%= if assigns[:user] do %>
+  <%= if length(@user.schools) > 0 do %>
+    <div class="table-scroll">
+      <table>
+        <thead>
           <tr>
-            <td><%= live_patch school.name, to: Routes.school_show_path(@socket, :index, school.id) %></td>
-            <td>
-              <%= if school.active, do: "Aktif", else: "Belum aktif" %>
-            </td>
-            <td>
-              <%= if school.confirmed, do: "Terkonfirmasi", else: "Belum dikonfirmasi" %>
-            </td>
-            <td>
-              <ul class="menu">
-                <li><%= live_patch "Ubah", to: Routes.school_edit_path(@socket, :index, school.id) %></li>
-                <%= if !school.active do %>
-                  <li><%= link "Aktifkan", to: "#", phx_click: "activate", phx_value_id: school.id %></li>
-                <% end %>
-                <%= if school.active do %>
-                  <li><%= link "Non aktifkan", to: "#", phx_click: "deactivate", phx_value_id: school.id %></li>
-                <% end %>
-              </ul>
-            </td>
+            <th>Nama Sekolah</th>
+            <th>
+              Aktif
+              <span data-tooltip phx-hook="foundation" title="Sekolah yang tidak aktif hanya dapat diakses oleh pemilik">?</span>
+            </th>
+            <th>
+              Konfirmasi
+              <span data-tooltip phx-hook="foundation" title="Sekolah perlu dikonfirmasi oleh admin sebelum dapat digunakan">?</span>
+            </th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <%= for school <- @user.schools do %>
+            <tr>
+              <td><%= live_patch school.name, to: Routes.school_show_path(@socket, :index, school.id) %></td>
+              <td>
+                <%= if school.active, do: "Aktif", else: "Belum aktif" %>
+              </td>
+              <td>
+                <%= if school.confirmed, do: "Terkonfirmasi", else: "Belum dikonfirmasi" %>
+              </td>
+              <td>
+                <ul class="menu">
+                  <li><%= live_patch "Ubah", to: Routes.school_edit_path(@socket, :index, school.id) %></li>
+                  <%= if !school.active do %>
+                    <li><%= link "Aktifkan", to: "#", phx_click: "activate", phx_value_id: school.id %></li>
+                  <% end %>
+                  <%= if school.active do %>
+                    <li><%= link "Non aktifkan", to: "#", phx_click: "deactivate", phx_value_id: school.id %></li>
+                  <% end %>
+                </ul>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% else %>
     <div class="callout primary">
       Anda belum mendaftarkan sekolah, silahkan membuat sekolah baru
