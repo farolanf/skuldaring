@@ -1,7 +1,7 @@
 <h1><small></small><%= @school.name %></h1>
 
 <div class="grid-x">
-  <div class="cell small-3">
+  <div class="cell large-3">
     <ul class="menu vertical">
       <%= for room <- @school.rooms do %>
         <li class="<%= if assigns[:room] && @room.id == room.id, do: "is-active", else: "" %>"><%= live_patch room.name, to: Routes.school_show_path(@socket, :visit_room, slug(@school), slug(room))  %></li>
