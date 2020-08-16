@@ -4,11 +4,12 @@ defmodule SkuldaringWeb.NavLive.BreadcrumbsLive do
   import Skuldaring.Utils
 
   @paths [
-    # path regexes for breadcrumbs
+    # path patterns for breadcrumbs
     {"/", "Beranda"},
     {"/akun", "Akun"},
     {"/sekolah", "Sekolah"},
-    {"/sekolah/[^/]+/edit", "Atur Sekolah"},
+    {"/sekolah/*/edit", "Atur Sekolah"},
+    {"/sekolah/*/edit/room/*/edit", "Atur Ruangan"},
   ]
 
   @impl true

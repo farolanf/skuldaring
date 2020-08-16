@@ -13,6 +13,7 @@ defmodule Skuldaring.Utils do
       paths,
       [],
       fn {to, label}, breadcrumbs ->
+        to = to |> String.replace("*", "[^/]+")
         {:ok, re} = Regex.compile(to)
         case Regex.run(re, url_path) do
           [path | _matches] -> [{path, label} | breadcrumbs]
