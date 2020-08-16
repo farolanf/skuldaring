@@ -60,6 +60,7 @@ defmodule SkuldaringWeb.SchoolLive.RoomForm do
         {:ok, _room} ->
           socket
           |> put_flash(:success, "Sukses membuat ruangan baru")
+          |> redirect(to: socket.assigns.return_to)
         {:error, %Ecto.Changeset{} = changeset} ->
           socket
           |> assign(changeset: changeset)

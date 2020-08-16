@@ -2,3 +2,6 @@ p, admin, *, *
 
 p, user, school, create
 p, owner, school, *
+
+p, user, room, create
+p, owner, room, *

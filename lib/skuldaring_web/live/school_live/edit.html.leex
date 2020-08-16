@@ -44,7 +44,8 @@
             action: :new,
             room: %Skuldaring.Schools.Room{},
             school: @school,
-            user: @user %>
+            user: @user,
+            return_to: Routes.school_edit_path(@socket, :room_index, @school.id) %>
         </div>
       </div>
     <% end %>

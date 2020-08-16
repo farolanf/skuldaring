@@ -16,9 +16,9 @@ defmodule SkuldaringWeb.Helpers do
   end
 
   def handle_access_denied(%Socket{} = socket) do
-    {:noreply, socket
+    socket
     |> put_flash(:error, "Akses ditolak")
-    |> push_redirect(to: "/")}
+    |> push_redirect(to: "/")
   end
 
 end
