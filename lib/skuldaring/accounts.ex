@@ -9,6 +9,7 @@ defmodule Skuldaring.Accounts do
   alias Skuldaring.Repo
 
   alias Skuldaring.Accounts.User
+  alias Skuldaring.Schools.School
 
   @doc """
   Returns the list of users.
@@ -37,7 +38,11 @@ defmodule Skuldaring.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    User
+    |> Repo.get!(id)
+    |> Repo.preload(schools: from(s in School, order_by: s.name))
+  end
 
   @doc """
   Creates a user.
