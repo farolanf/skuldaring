@@ -1,14 +1,23 @@
 <h1>Atur Sekolah</h1>
 
-<% IO.inspect assigns %>
-
-<ul>
-  <li><%= live_patch "Ruangan", to: Routes.school_edit_path(@socket, :room_index, @school.id) %></li>
+<ul class="menu">
+  <li class="<%= if @live_action == :index, do: "is-active", else: "" %>"><%= live_patch "Umum", to: Routes.school_edit_path(@socket, :index, @school.id) %></li>
+  <li class="<%= if @live_action in [:room_index, :room_edit], do: "is-active", else: "" %>"><%= live_patch "Ruangan", to: Routes.school_edit_path(@socket, :room_index, @school.id) %></li>
 </ul>
 
-<%= if @live_action in [:room_index] do %>
-  <h2>Ruangan</h2>
-  <%= for room <- @rooms do %>
-    <%= room.name %>
+<div class="padding-1">
+  <%= if @live_action == :index do
+    live_component @socket, SkuldaringWeb.SchoolLive.Form,
+      id: @school.id,
+      action: :edit,
+      school: @school,
+      user: @user
+  end %>
+
+  <%= if @live_action in [:room_index] do %>
+    room
+    <%= for room <- @rooms do %>
+      <%= room.name %>
+    <% end %>
   <% end %>
-<% end %>
+</div>

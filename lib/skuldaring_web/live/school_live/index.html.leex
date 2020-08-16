@@ -51,7 +51,7 @@
 <% end %>
 
 <%= if @live_action in [:new] do %>
-  <%= live_modal @socket, :form_modal, SkuldaringWeb.SchoolLive.NewForm,
+  <%= live_modal @socket, :form_modal, SkuldaringWeb.SchoolLive.Form,
     id: @school.id || :new,
     title: @page_title,
     action: @live_action,

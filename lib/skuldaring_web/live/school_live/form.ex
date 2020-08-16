@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.SchoolLive.NewForm do
+defmodule SkuldaringWeb.SchoolLive.Form do
   use SkuldaringWeb, :live_component
 
   alias Skuldaring.Schools
@@ -63,7 +63,6 @@ defmodule SkuldaringWeb.SchoolLive.NewForm do
         {:ok, _school} ->
           socket = socket
           |> put_flash(:success, "Sukses mengubah sekolah")
-          |> push_redirect(to: socket.assigns.return_to)
 
           {:noreply, socket}
         {:error, %Ecto.Changeset{} = changeset} ->

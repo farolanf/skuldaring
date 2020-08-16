@@ -23,7 +23,10 @@ defmodule SkuldaringWeb.SchoolLive.Edit do
     {:noreply, apply_action(socket.assigns.live_action, params, socket)}
   end
 
-  defp apply_action(:index, _params, socket), do: socket
+  defp apply_action(:index, _params, socket) do
+    socket
+    |> assign(:changeset, Schools.change_school(socket.assigns.school))
+  end
 
   defp apply_action(:room_index, _params, socket) do
     school = socket.assigns.school

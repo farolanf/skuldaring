@@ -1,4 +1,6 @@
-<h2><%= @title %></h2>
+<%= if assigns[:title] do %>
+  <h2><%= @title %></h2>
+<% end %>
 
 <%= f = form_for @changeset, "#",
   id: "post-form",
@@ -10,7 +12,9 @@
   <%= text_input f, :name, class: (@touched && Keyword.has_key?(@changeset.errors, :name) && "is-invalid-input") %>
   <%= error_tag f, :name %>
 
+  <% IO.inspect @changeset %>
+
   <div>
-    <%= submit "Save", phx_disable_with: "Saving...", class: "button" %>
+    <%= submit "Save", phx_disable_with: "Saving...", class: "button", disabled: !@changeset.valid? %>
   </div>
 </form>

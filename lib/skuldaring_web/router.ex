@@ -35,9 +35,11 @@ defmodule SkuldaringWeb.Router do
 
     live "/", Index, :index
     live "/new", Index, :new
+
     live "/:id/edit", Edit, :index
     live "/:id/edit/room", Edit, :room_index
     live "/:id/edit/room/:room_id/edit", Edit, :room_edit
+
     live "/:id", Show, :index
   end
 
