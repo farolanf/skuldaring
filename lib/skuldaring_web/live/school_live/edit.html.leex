@@ -15,8 +15,8 @@
   end %>
 
   <%= if @live_action == :room_index, do:
-    live_component @socket, SkuldaringWeb.SchoolLive.Room.Index, assigns %>
+    live_component @socket, SkuldaringWeb.SchoolLive.Room.Index, Map.merge(assigns, %{id: @school.id}) %>
 
   <%= if @live_action == :room_edit, do:
-    live_component @socket, SkuldaringWeb.SchoolLive.Room.Edit, assigns %>
+    live_component @socket, SkuldaringWeb.SchoolLive.Room.Edit, Map.merge(assigns, %{id: @school.id}) %>
 </div>

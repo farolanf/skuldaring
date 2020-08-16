@@ -25,10 +25,11 @@
   </div>
 <% end %>
 
-<%= content_tag :button, "Ruangan Baru", class: "button", phx_click: "open", phx_value_new_room_modal: "true" %>
+<%= content_tag :button, "Ruangan Baru", class: "button", phx_click: "open", phx_value_new_room_modal: "true", phx_target: @myself %>
 
 <%= if assigns[:new_room_modal] do %>
   <div class="reveal-overlay" style="display: block"
+    phx-target="<%= @myself %>"
     phx-value-new-room-modal="false"
     phx-capture-click="open"
     phx-window-keydown="open"
