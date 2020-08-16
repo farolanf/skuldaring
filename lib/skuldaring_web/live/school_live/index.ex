@@ -51,7 +51,7 @@ defmodule SkuldaringWeb.SchoolLive.Index do
     do
       socket
         |> put_flash(:success, "Sukses mengaktifkan sekolah")
-        |> redirect(to: Routes.school_index_path(socket, :index))
+        |> push_redirect(to: Routes.school_index_path(socket, :index))
     else
       _ -> socket
         |> put_flash(:error, "Gagal mengaktifkan sekolah")
@@ -66,7 +66,7 @@ defmodule SkuldaringWeb.SchoolLive.Index do
     do
       socket
         |> put_flash(:success, "Sukses menon-aktifkan sekolah")
-        |> redirect(to: Routes.school_index_path(socket, :index))
+        |> push_redirect(to: Routes.school_index_path(socket, :index))
     else
       _ -> socket
         |> put_flash(:error, "Gagal menon-aktifkan sekolah")

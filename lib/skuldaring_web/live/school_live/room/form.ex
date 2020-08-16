@@ -60,7 +60,7 @@ defmodule SkuldaringWeb.SchoolLive.Room.Form do
         {:ok, _room} ->
           socket
           |> put_flash(:success, "Sukses membuat ruangan baru")
-          |> redirect(to: socket.assigns.return_to)
+          |> push_redirect(to: socket.assigns.return_to)
         {:error, %Ecto.Changeset{} = changeset} ->
           socket
           |> assign(changeset: changeset)
@@ -83,7 +83,7 @@ defmodule SkuldaringWeb.SchoolLive.Room.Form do
         {:ok, _room} ->
           socket
           |> put_flash(:success, "Sukses mengubah ruangan")
-          |> redirect(to: return_to)
+          |> push_redirect(to: return_to)
         {:error, %Ecto.Changeset{} = changeset} ->
           socket
           |> assign(changeset: changeset)
