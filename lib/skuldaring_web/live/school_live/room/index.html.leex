@@ -1,0 +1,49 @@
+<%= if assigns[:rooms] && length(@rooms) > 0 do %>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama Ruangan</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for room <- @rooms do %>
+        <tr>
+          <td><%= room.name %></td>
+          <td>
+            <ul class="menu">
+              <li><%= live_patch "Atur", to: Routes.school_edit_path(@socket, :room_edit, @school.id, room.id) %></li>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="callout primary">
+    Belum ada ruangan, silahkan membuat ruangan baru
+  </div>
+<% end %>
+
+<%= content_tag :button, "Ruangan Baru", class: "button", phx_click: "open", phx_value_new_room_modal: "true" %>
+
+<%= if assigns[:new_room_modal] do %>
+  <div class="reveal-overlay" style="display: block"
+    phx-value-new-room-modal="false"
+    phx-capture-click="open"
+    phx-window-keydown="open"
+    phx-key="escape"
+    phx-page-loading
+  >
+    <div id="new-room-modal" class="reveal" style="display: block">
+      <%= live_component @socket, SkuldaringWeb.SchoolLive.Room.Form,
+        id: :new,
+        title: "Ruangan Baru",
+        action: :new,
+        room: %Skuldaring.Schools.Room{},
+        school: @school,
+        user: @user,
+        return_to: Routes.school_edit_path(@socket, :room_index, @school.id) %>
+    </div>
+  </div>
+<% end %>

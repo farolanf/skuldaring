@@ -1,6 +1,8 @@
 defmodule SkuldaringWeb.SchoolLive.Edit do
   use SkuldaringWeb, :live_view
 
+  import Skuldaring.Permissions
+
   alias Skuldaring.Schools
 
   @impl true
@@ -35,6 +37,19 @@ defmodule SkuldaringWeb.SchoolLive.Edit do
 
     socket
     |> assign(:rooms, rooms)
+  end
+
+  defp apply_action(:room_edit, %{"room_id" => room_id}, socket) do
+    %{user: user} = socket.assigns
+
+    room = Schools.get_room!(room_id)
+
+    if !allow?(user, room, "view") do
+      handle_access_denied(socket)
+    else
+      socket
+      |> assign(:room, room)
+    end
   end
 
   @impl true

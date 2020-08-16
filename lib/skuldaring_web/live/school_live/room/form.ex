@@ -1,4 +1,4 @@
-defmodule SkuldaringWeb.SchoolLive.RoomForm do
+defmodule SkuldaringWeb.SchoolLive.Room.Form do
   use SkuldaringWeb, :live_component
 
   import Skuldaring.Permissions
