@@ -1,6 +1,8 @@
 defmodule SkuldaringWeb.Helpers do
   import Phoenix.LiveView
 
+  import Recase
+
   alias Phoenix.LiveView.Socket
   alias Skuldaring.Accounts
 
@@ -18,6 +20,16 @@ defmodule SkuldaringWeb.Helpers do
     socket
     |> put_flash(:error, "Akses ditolak")
     |> push_redirect(to: "/")
+  end
+
+  def school_visit_path(school) do
+    "/visit/#{to_kebab(school.name)}-#{school.id}"
+  end
+
+  def id_from_slug(slug) do
+    slug
+    |> String.split("-")
+    |> List.last
   end
 
 end

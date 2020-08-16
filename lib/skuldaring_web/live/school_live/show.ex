@@ -6,7 +6,9 @@ defmodule SkuldaringWeb.SchoolLive.Show do
   alias Skuldaring.Schools
 
   @impl true
-  def mount(%{"id" => id}, %{} = session, socket) do
+  def mount(%{"slug" => slug}, %{} = session, socket) do
+    id = id_from_slug(slug)
+
     school = Schools.get_school!(id)
 
     socket = socket

@@ -28,7 +28,7 @@ defmodule SkuldaringWeb.Router do
     get "/logout", SessionController, :logout
 
     live "/", FrontLive.Index, :index
-    live "/beranda-sekolah/:id", SchoolLive.Show, :index
+    live "/visit/:slug", SchoolLive.Show, :index
   end
 
   scope "/sekolah", SkuldaringWeb.SchoolLive do

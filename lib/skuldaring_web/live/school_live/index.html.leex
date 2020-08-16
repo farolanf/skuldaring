@@ -21,7 +21,7 @@
         <tbody>
           <%= for school <- @user.schools do %>
             <tr>
-              <td><%= live_patch school.name, to: Routes.school_show_path(@socket, :index, school.id) %></td>
+              <td><%= live_redirect school.name, to: school_visit_path(school) %></td>
               <td>
                 <%= if school.active, do: "Aktif", else: "Belum aktif" %>
               </td>
