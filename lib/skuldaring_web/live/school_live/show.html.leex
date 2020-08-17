@@ -1,6 +1,6 @@
 <h1><small></small><%= @school.name %></h1>
 
-<div class="grid-x">
+<div class="grid-x grid-margin-x">
   <div class="cell large-3">
     <ul class="menu vertical">
       <li class="<%= if String.ends_with?(@uri.path, slug(@school)), do: "is-active", else: "" %>"><%= live_redirect "Beranda Sekolah", to: Routes.school_show_path(@socket, :index, slug(@school)) %></li>
@@ -8,5 +8,55 @@
         <li class="<%= if assigns[:room] && @room.id == room.id, do: "is-active", else: "" %>"><%= live_patch room.name, to: Routes.school_show_path(@socket, :visit_room, slug(@school), slug(room))  %></li>
       <% end %>
     </ul>
+  </div>
+  <div class="cell auto">
+    <div class="card">
+      <div class="card-divider">Info Kelas</div>
+      <div class="card-section">
+        <strong>Kelas 1 Banat - Hadist</strong>
+      </div>
+      <div class="padding-top-1 padding-left-1">
+        <button class="button">Masuk</button>
+      </div>
+    </div>
+    <h2 class="h3">Tugas</h2>
+    <div class="padding-1">
+      <div class="card">
+        <div class="card-divider">Ringkasan Materi Hadist-1</div>
+        <div class="card-section">
+          Batas pengumpulan tugas: 21-08-2020 21:00 WITA<br />
+        </div>
+        <div class="padding-top-1 padding-left-1">
+          <button class="button">Upload Ringkasan Materi Hadist 1</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-divider">Video Hapalan Hadist-1</div>
+        <div class="card-section">
+          Batas pengumpulan tugas: 21-08-2020 21:00 WITA<br />
+        </div>
+        <div class="padding-top-1 padding-left-1">
+          <button class="button">Upload Video Hapalan Hadist 1</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-divider">Pengumuman</div>
+      <div class="card-section">
+        Lorem ipsum
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-divider">Jadwal Kelas</div>
+      <div class="card-section">
+        Lorem ipsum
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-divider">Materi Semester</div>
+      <div class="card-section">
+        Lorem ipsum
+      </div>
+    </div>
   </div>
 </div>
