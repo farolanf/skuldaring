@@ -3,6 +3,7 @@
 <div class="grid-x">
   <div class="cell large-3">
     <ul class="menu vertical">
+      <li class="<%= if String.ends_with?(@uri.path, slug(@school)), do: "is-active", else: "" %>"><%= live_redirect "Beranda Sekolah", to: Routes.school_show_path(@socket, :index, slug(@school)) %></li>
       <%= for room <- @school.rooms do %>
         <li class="<%= if assigns[:room] && @room.id == room.id, do: "is-active", else: "" %>"><%= live_patch room.name, to: Routes.school_show_path(@socket, :visit_room, slug(@school), slug(room))  %></li>
       <% end %>
